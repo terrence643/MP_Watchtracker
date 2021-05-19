@@ -18,7 +18,6 @@ import android.view.ViewGroup;
  */
     public class FragmentHome extends Fragment {
 
-        private static String popularMovie = "https://api.themoviedb.org/3/movie/popular?api_key="+ BuildConfig.TMDB_API;
 
     public FragmentHome(){
         //Required empty public constructor
