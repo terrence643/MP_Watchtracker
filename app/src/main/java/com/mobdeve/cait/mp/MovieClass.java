@@ -1,6 +1,6 @@
 package com.mobdeve.cait.mp;
 
-public class movieClass {
+public class MovieClass {
 
     String id;
     String name;
@@ -30,12 +30,12 @@ public class movieClass {
         this.img = img;
     }
 
-    public movieClass(String id, String name, String img) {
+    public MovieClass(String id, String name, String img) {
         this.id = id;
         this.name = name;
         this.img = img;
     }
 
-    public movieClass() {
+    public MovieClass() {
     }
 }

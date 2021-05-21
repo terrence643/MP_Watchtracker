@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tabName ;
     private ViewPager2 viewPager ;
     private FragmentAdapter fragmentAdapter ;
-//
+
 //    private static String popularMovie = "https://api.themoviedb.org/3/movie/popular?api_key="+ BuildConfig.TMDB_API;
 //
 //    List<movieClass> movieList;
@@ -59,7 +59,12 @@ public class MainActivity extends AppCompatActivity {
 //        getData.execute();
 
         buildView();
+        fragmentManager();
 
+
+    }
+
+    public void fragmentManager(){
         FragmentManager fm = getSupportFragmentManager();
         this.fragmentAdapter = new FragmentAdapter(fm, getLifecycle()) ;
         viewPager.setAdapter(fragmentAdapter);
@@ -90,18 +95,17 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         tabName.setText("Home");
                         break;
+//                    case 1:
+//                        tabName.setText("Add new list");
+//                        break;
                     case 1:
-                        tabName.setText("Add new list");
-                        break;
-                    case 2:
                         tabName.setText("Discover");
                         break;
                 }
             }
         });
-
     }
-//
+
 //    public class GetData extends AsyncTask<String, String, String>{
 //
 //        @Override
@@ -180,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
     public void buildView(){
         this.tab = findViewById(R.id.tab_header) ;
         this.tabHome = findViewById(R.id.tab_home) ;
-        this.tabAdd = findViewById(R.id.tab_addnew) ;
         this.tabDiscover = findViewById(R.id.tab_discover) ;
         this.viewPager = findViewById(R.id.viewPager) ;
         this.tabName = findViewById(R.id.txt_tabname) ;

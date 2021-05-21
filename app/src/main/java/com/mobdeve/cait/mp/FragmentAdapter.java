@@ -20,13 +20,14 @@ public class FragmentAdapter extends FragmentStateAdapter {
         switch (position){
             case 0:
                 Log.d("TABITEM", "getItem: " + position);
-                fragment = new FragmentHome() ;
+                fragment = new FragmentView() ;
+                Log.d("TABITEM", "createFragment: fragment view ok");
                 break;
+//            case 1:
+//                Log.d("TABITEM", "getItem: " + position);
+//                fragment = new FragmentAdd() ;
+//                break;
             case 1:
-                Log.d("TABITEM", "getItem: " + position);
-                fragment = new FragmentAdd() ;
-                break;
-            case 2:
                 Log.d("TABITEM", "getItem: " + position);
                 fragment = new FragmentDiscover() ;
                 break;
@@ -36,6 +37,6 @@ public class FragmentAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }
