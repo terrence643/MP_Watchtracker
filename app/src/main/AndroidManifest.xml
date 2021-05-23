@@ -11,8 +11,13 @@
         android:roundIcon="@mipmap/wt_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.MP">
-        <activity android:name=".DiscoverActivity" android:launchMode="singleTask"></activity>
-        <activity android:name=".MainActivity" android:launchMode="singleTask">
+        <activity android:name=".MovieViewActivity"></activity>
+        <activity
+            android:name=".DiscoverActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

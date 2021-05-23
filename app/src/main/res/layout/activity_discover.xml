@@ -79,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/helveticabold"
                 android:text="Movies"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
             <ImageButton
@@ -96,9 +97,7 @@
         android:id="@+id/recycler_discMovie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
         android:orientation="horizontal">
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -122,6 +121,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/helveticabold"
                 android:text="TV Series"
+                android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
             <ImageButton
@@ -138,11 +138,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_Current"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
         android:orientation="horizontal" />
 
 
