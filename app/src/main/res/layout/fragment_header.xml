@@ -30,7 +30,8 @@
             android:layout_marginRight="5dp"
             android:fontFamily="@font/helveticalight"
             android:gravity="center"
-            android:textColor="#FFFFFF"
+            android:textColor="#1CE783"
+            android:textStyle="bold"
             tools:text="PageTitle here" />
 
         <SearchView
@@ -39,23 +40,25 @@
             android:layoutDirection="rtl" />
     </LinearLayout>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_header"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:tabGravity="fill">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_home"
+        <ImageView
+            android:id="@+id/img_tabHome"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/outline_home_24" />
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/outline_home_24" />
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_discover"
+        <ImageView
+            android:id="@+id/img_tabDiscover"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/outline_stream_24" />
-    </com.google.android.material.tabs.TabLayout>
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/outline_stream_24" />
+    </LinearLayout>
+
 
 </LinearLayout>

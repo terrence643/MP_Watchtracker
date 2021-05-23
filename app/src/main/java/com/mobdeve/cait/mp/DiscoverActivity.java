@@ -1,16 +1,15 @@
 package com.mobdeve.cait.mp;
 
-import android.os.AsyncTask;
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,29 +24,53 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentDiscover extends Fragment {
+public class DiscoverActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static String popularMovie = "https://api.themoviedb.org/3/movie/popular?api_key="+ BuildConfig.TMDB_API;
     public List<MovieClass> movieList;
     public RecyclerView recyclerView;
 
-    public FragmentDiscover() {
-        // Required empty public constructor
-    }
+    private TextView tabName ;
+    private ImageView tabHome ;
+    private ImageView tabDiscover ;
+    private Intent intent ;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_discover, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_discover);
 
+        buildView();
         movieList = new ArrayList<>();
-        this.recyclerView = (RecyclerView) view.findViewById(R.id.recycler_discMovie) ;
+        this.recyclerView = findViewById(R.id.recycler_discMovie) ;
 
         GetData getData = new GetData();
         getData.execute();
+    }
 
-        // Inflate the layout for this fragment
-        return view ;
+    public void buildView(){
+        this.tabHome = findViewById(R.id.img_tabHome) ;
+        this.tabDiscover = findViewById(R.id.img_tabDiscover) ;
+        this.tabName = findViewById(R.id.txt_tabname) ;
+
+        tabName.setText("DISCOVER");
+
+        tabHome.setOnClickListener(this);
+        tabDiscover.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.img_tabHome:
+                intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+                break ;
+            case R.id.img_tabDiscover:
+                intent = new Intent(getBaseContext(), DiscoverActivity.class);
+                startActivity(intent);
+                break ;
+        }
     }
 
     public class GetData extends AsyncTask<String, String, String> {
@@ -120,8 +143,8 @@ public class FragmentDiscover extends Fragment {
 
     private void dataInRecyclerView(List<MovieClass> movieList){
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        movieAdapter adapter = new movieAdapter(getContext(), movieList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        movieAdapter adapter = new movieAdapter(this, movieList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
