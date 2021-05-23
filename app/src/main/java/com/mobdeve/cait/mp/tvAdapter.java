@@ -17,8 +17,17 @@ public class tvAdapter extends RecyclerView.Adapter<tvAdapter.MyViewHolder> {
 
     private Context tvContext;
     private List<TvClass> tvData;
+    private OnItemClickListener tvListener ;
 
-    public tvAdapter(Context tvContext, List<MovieClass> movieData) {
+    public interface OnItemClickListener{
+        void onItemClick(int position) ;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        tvListener = listener ;
+    }
+
+    public tvAdapter(Context tvContext, List<TvClass> tvData) {
         this.tvContext = tvContext;
         this.tvData = tvData;
     }
@@ -26,23 +35,16 @@ public class tvAdapter extends RecyclerView.Adapter<tvAdapter.MyViewHolder> {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v;
-        LayoutInflater inflater = LayoutInflater.from(tvContext);
-        v = inflater.inflate(R.layout.tv_layout,parent,false);
-
-        return new MyViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tv_layout, parent, false) ;
+        MyViewHolder myViewHolder = new MyViewHolder(v, tvListener) ;
+        return myViewHolder ;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         Glide.with(tvContext).load("https://image.tmdb.org/t/p/w500"+tvData.get(position).getImg()).into(holder.tvPoster);
-        holder.tvPoster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
     }
 
     @Override
@@ -56,10 +58,21 @@ public class tvAdapter extends RecyclerView.Adapter<tvAdapter.MyViewHolder> {
 
         ImageView tvPoster;
 
-        public MyViewHolder(@NonNull View itemView){
+        public MyViewHolder(@NonNull View itemView, OnItemClickListener listener){
             super(itemView);
-            tvPoster = itemView.findViewById(R.id.moviePoster);
+            tvPoster = itemView.findViewById(R.id.tvPoster);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

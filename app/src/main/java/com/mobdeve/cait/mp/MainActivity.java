@@ -41,11 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView tabDiscover ;
     private Intent intent ;
 
-//    private static String popularMovie = "https://api.themoviedb.org/3/movie/popular?api_key="+ BuildConfig.TMDB_API;
-//
-//    List<movieClass> movieList;
-//    RecyclerView recyclerView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
