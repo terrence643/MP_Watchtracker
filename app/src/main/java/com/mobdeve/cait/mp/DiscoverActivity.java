@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,8 +29,8 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
     private static String popularMovie = "https://api.themoviedb.org/3/movie/popular?api_key="+ BuildConfig.TMDB_API;
     public List<MovieClass> movieList;
-    public RecyclerView recyclerView;
-
+    public RecyclerView recycler_Movie;
+    public MovieAdapter movieAdapter ;
     private TextView tabName ;
     private ImageView tabHome ;
     private ImageView tabDiscover ;
@@ -42,10 +43,10 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
         buildView();
         movieList = new ArrayList<>();
-        this.recyclerView = findViewById(R.id.recycler_discMovie) ;
 
-        GetData getData = new GetData();
-        getData.execute();
+
+        GetDataMovie getDataMovie = new GetDataMovie();
+        getDataMovie.execute();
     }
 
     public void buildView(){
@@ -57,6 +58,11 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
         tabHome.setOnClickListener(this);
         tabDiscover.setOnClickListener(this);
+    }
+
+    public void buildRecylcler(){
+
+
     }
 
     @Override
@@ -73,7 +79,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public class GetData extends AsyncTask<String, String, String> {
+    public class GetDataMovie extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -109,11 +115,9 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
                         urlConnection.disconnect();
                     }
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             return current;
         }
 
@@ -132,21 +136,27 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
                     movieList.add(model);
 
                 }
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            dataInRecyclerView(movieList);
+            dataInRecyclerMovie(movieList);
         }
     }
 
-    private void dataInRecyclerView(List<MovieClass> movieList){
-
+    private void dataInRecyclerMovie(List<MovieClass> movieList){
+        //MOVIES
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        movieAdapter adapter = new movieAdapter(this, movieList);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        this.movieAdapter = new MovieAdapter(this, movieList);
+        this.recycler_Movie = findViewById(R.id.recycler_discMovie) ;
+        recycler_Movie.setLayoutManager(layoutManager);
+        recycler_Movie.setAdapter(movieAdapter);
 
+
+        movieAdapter.setOnItemClickListener(new MovieAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Log.d("MOVIECLICK", "onItemClick: " + position);
+            }
+        });
     }
 }
