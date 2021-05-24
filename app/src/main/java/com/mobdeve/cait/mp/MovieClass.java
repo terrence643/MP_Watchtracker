@@ -5,6 +5,24 @@ public class MovieClass {
     String id;
     String name;
     String img;
+    String language;
+    String overview;
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
 
     public String getId() {
         return id;
@@ -30,10 +48,12 @@ public class MovieClass {
         this.img = img;
     }
 
-    public MovieClass(String id, String name, String img) {
+    public MovieClass(String id, String name, String img, String language, String overview) {
         this.id = id;
         this.name = name;
         this.img = img;
+        this.language = language;
+        this.overview = overview;
     }
 
     public MovieClass() {

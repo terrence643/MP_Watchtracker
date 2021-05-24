@@ -54,13 +54,12 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <TextView
-            android:id="@+id/tv_Status"
+            android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/helveticalight"
-            android:text="TextView"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -115,7 +114,7 @@
             android:text="TextView"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/tv_Status" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_status" />
 
         <RadioGroup
             android:id="@+id/rg_group"
@@ -155,17 +154,6 @@
                 android:textSize="12sp" />
         </RadioGroup>
 
-        <CheckBox
-            android:id="@+id/check_Favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="7dp"
-            android:text="Add to favorites"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/tv_MovieViewTitle" />
-
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
@@ -176,7 +164,7 @@
             android:text="Watching status"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/check_Favorite" />
+            app:layout_constraintTop_toBottomOf="@+id/chip_Favorite" />
 
         <TextView
             android:id="@+id/textView4"
