@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -154,7 +156,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void dataInMovie(List<MovieClass> movieList){
-        //MOVIES
+
         Intent i = getIntent();
         tv_MovieViewTitle = findViewById(R.id.tv_MovieViewTitle);
         tv_Language = findViewById(R.id.tv_Language);
@@ -166,7 +168,8 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         tv_Language.setText(i.getStringExtra("original_language"));
         tv_Overview.setText(i.getStringExtra("overview"));
 
-        Log.d("this is empty", String.valueOf(tv_status.getText().toString().isEmpty()));
+        Picasso.get().load("https://image.tmdb.org/t/p/w500"+i.getStringExtra("poster_path")).into(ImageView);
+
         if (tv_status.getText().toString().isEmpty()){
             tv_status.setText("Not Watching");
         }
