@@ -257,10 +257,13 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         TvAdapter.setOnItemClickListener(new tvAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-//                Intent i = new Intent(DiscoverActivity.this,TvView Activity.class);
-//                i.putExtra("name",tvList.get(position).getName());
-//                i.putExtra("id",tvList.get(position).getId());
-//                startActivity(i);
+                Intent i2 = new Intent(DiscoverActivity.this,TvViewActivity.class);
+                i2.putExtra("name",tvList.get(position).getName());
+                i2.putExtra("id",tvList.get(position).getId());
+                i2.putExtra("poster_path",tvList.get(position).getImg());
+                i2.putExtra("overview",tvList.get(position).getOverview());
+                i2.putExtra("original_language",tvList.get(position).getLanguage());
+                startActivity(i2);
                 Log.d("TVCLICK", "onItemClick: " + position);
             }
         });
