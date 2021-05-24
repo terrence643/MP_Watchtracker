@@ -45,7 +45,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
 
-        buildView();
+        buildHeader();
         movieList = new ArrayList<>();
         tvList = new ArrayList<>();
 
@@ -56,7 +56,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         getDataTv.execute();
     }
 
-    public void buildView(){
+    public void buildHeader(){
         this.tabHome = findViewById(R.id.img_tabHome) ;
         this.tabDiscover = findViewById(R.id.img_tabDiscover) ;
         this.tabName = findViewById(R.id.txt_tabname) ;
@@ -67,10 +67,6 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         tabDiscover.setOnClickListener(this);
     }
 
-    public void buildRecylcler(){
-
-
-    }
 
     @Override
     public void onClick(View v) {

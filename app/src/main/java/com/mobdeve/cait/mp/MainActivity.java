@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
 
-        buildView();
+        buildHeader();
 
 
 
     }
 
-    public void buildView(){
+    public void buildHeader(){
         this.tabHome = findViewById(R.id.img_tabHome) ;
         this.tabDiscover = findViewById(R.id.img_tabDiscover) ;
         this.tabName = findViewById(R.id.txt_tabname) ;
