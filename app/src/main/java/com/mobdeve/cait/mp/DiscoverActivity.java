@@ -140,6 +140,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
                     MovieClass model = new MovieClass();
                     model.setImg(jsonObject1.getString("poster_path"));
+                    Log.d("poster",jsonObject1.getString("poster_path"));
                     model.setId(jsonObject1.getString("id"));
                     model.setName(jsonObject1.getString("original_title"));
                     model.setOverview(jsonObject1.getString("overview"));
