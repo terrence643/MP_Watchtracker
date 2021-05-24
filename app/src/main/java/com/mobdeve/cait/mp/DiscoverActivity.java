@@ -140,6 +140,11 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
                     MovieClass model = new MovieClass();
                     model.setImg(jsonObject1.getString("poster_path"));
+                    model.setId(jsonObject1.getString("id"));
+                    model.setName(jsonObject1.getString("original_title"));
+                    model.setOverview(jsonObject1.getString("overview"));
+                    model.setLanguage(jsonObject1.getString("original_language"));
+
                     movieList.add(model);
 
                 }
@@ -204,6 +209,10 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
                     TvClass model = new TvClass();
                     model.setImg(jsonObject1.getString("poster_path"));
+                    model.setId(jsonObject1.getString("id"));
+                    model.setName(jsonObject1.getString("name"));
+                    model.setLanguage(jsonObject1.getString("original_language"));
+                    model.setOverview(jsonObject1.getString("overview"));
                     tvList.add(model);
 
                 }
@@ -226,10 +235,16 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         movieAdapter.setOnItemClickListener(new MovieAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-//                Intent i = new Intent(this,movieDisplay);
-//                i.putExtra("position",position);
-//                startActivity(i);
+
+                Intent i = new Intent(DiscoverActivity.this,MovieViewActivity.class);
+                i.putExtra("name", movieList.get(position).getName());
+                i.putExtra("id",movieList.get(position).getId());
+                i.putExtra("poster_path",movieList.get(position).getImg());
+                i.putExtra("overview",movieList.get(position).getOverview());
+                i.putExtra("original_language",movieList.get(position).getLanguage());
                 Log.d("MOVIECLICK", "onItemClick: " + position);
+                startActivity(i);
+
             }
         });
     }
@@ -245,8 +260,9 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         TvAdapter.setOnItemClickListener(new tvAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-//                Intent i = new Intent(this,tvDisplay);
-//                i.putExtra("position",position);
+//                Intent i = new Intent(DiscoverActivity.this,TvView Activity.class);
+//                i.putExtra("name",tvList.get(position).getName());
+//                i.putExtra("id",tvList.get(position).getId());
 //                startActivity(i);
                 Log.d("TVCLICK", "onItemClick: " + position);
             }
