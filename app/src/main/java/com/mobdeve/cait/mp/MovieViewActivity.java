@@ -1,18 +1,16 @@
 package com.mobdeve.cait.mp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseIntArray;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,11 +24,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class MovieViewActivity extends AppCompatActivity {
+public class MovieViewActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private TextView tabName ;
+    private ImageView tabHome ;
+    private ImageView tabDiscover ;
+    private Intent intent ;
 
     private  String lookMovie = new String();
-
 
     public TextView tv_MovieViewTitle;
     public List<MovieClass> movieList;
@@ -38,12 +39,19 @@ public class MovieViewActivity extends AppCompatActivity {
     public TextView tv_Language;
     public TextView tv_Overview;
     public TextView tv_status;
+    public RadioGroup radioGroup ;
+    public CheckBox checkFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_view);
         Intent i = getIntent();
+
+        buildHeader();
+        this.radioGroup = findViewById(R.id.rg_group) ;
+        this.checkFavorites = findViewById(R.id.check_favorite) ;
+
 
         i.getStringExtra("position");
         i.getStringExtra("id");
@@ -52,6 +60,31 @@ public class MovieViewActivity extends AppCompatActivity {
         GetDataMovie getDataMovie = new GetDataMovie();
         getDataMovie.execute();
 
+    }
+
+    public void buildHeader(){
+        this.tabHome = findViewById(R.id.img_tabHome) ;
+        this.tabDiscover = findViewById(R.id.img_tabDiscover) ;
+        this.tabName = findViewById(R.id.txt_tabname) ;
+
+        tabName.setText("HOME");
+
+        tabHome.setOnClickListener(this);
+        tabDiscover.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.img_tabHome:
+                intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+                break ;
+            case R.id.img_tabDiscover:
+                intent = new Intent(getBaseContext(), DiscoverActivity.class);
+                startActivity(intent);
+                break ;
+        }
     }
 
     public class GetDataMovie extends AsyncTask<String, String, String> {
@@ -127,7 +160,7 @@ public class MovieViewActivity extends AppCompatActivity {
         tv_Language = findViewById(R.id.tv_Language);
         tv_Overview = findViewById(R.id.tv_Overview);
         tv_status = findViewById(R.id.tv_status);
-        ImageView = findViewById(R.id.imageView);
+        ImageView = findViewById(R.id.img_MoviePoster);
 
         tv_MovieViewTitle.setText(i.getStringExtra("name"));
         tv_Language.setText(i.getStringExtra("original_language"));

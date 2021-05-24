@@ -17,7 +17,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/img_MoviePoster"
             android:layout_width="139dp"
             android:layout_height="200dp"
             android:layout_marginStart="10dp"
@@ -37,7 +37,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/img_MoviePoster"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -51,7 +51,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/img_MoviePoster" />
 
         <TextView
             android:id="@+id/tv_status"
@@ -62,7 +62,7 @@
             android:fontFamily="@font/helveticalight"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/img_MoviePoster" />
 
         <TextView
             android:id="@+id/textView9"
@@ -120,8 +120,8 @@
             android:id="@+id/rg_group"
             android:layout_width="145dp"
             android:layout_height="98dp"
-            android:layout_marginStart="32dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            android:layout_marginStart="40dp"
+            app:layout_constraintStart_toEndOf="@+id/img_MoviePoster"
             app:layout_constraintTop_toBottomOf="@+id/textView3">
 
             <RadioButton
@@ -158,13 +158,13 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="11dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/helveticabold"
             android:text="Watching status"
             android:textColor="#FFFFFF"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/chip_Favorite" />
+            app:layout_constraintStart_toEndOf="@+id/img_MoviePoster"
+            app:layout_constraintTop_toBottomOf="@+id/check_favorite" />
 
         <TextView
             android:id="@+id/textView4"
@@ -186,6 +186,16 @@
             android:layout_marginTop="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <CheckBox
+            android:id="@+id/check_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="10dp"
+            android:text="Add to favorites"
+            app:layout_constraintStart_toEndOf="@+id/img_MoviePoster"
+            app:layout_constraintTop_toBottomOf="@+id/tv_MovieViewTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
