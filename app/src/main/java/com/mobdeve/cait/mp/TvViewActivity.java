@@ -11,6 +11,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
@@ -36,6 +38,8 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
     private  String lookTv = new String();
 
     public TextView tv_TVViewTitle;
+    public RecyclerView seasonRecycler;
+    public seasonAdapter seasonAdapter;
     public List<TvClass> tvList;
     public List<seasonClass> seasonList;
     public android.widget.ImageView tv_TVPoster;
@@ -59,8 +63,8 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         i.getStringExtra("id");
         Log.d("tv to be displayed", i.getStringExtra("id"));
 
-        GetTvMovie getTvMovie = new GetTvMovie();
-        getTvMovie.execute();
+        GetTv getTv = new GetTv();
+        getTv.execute();
 
     }
 
@@ -75,7 +79,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         tabDiscover.setOnClickListener(this);
     }
 
-    public class GetTvMovie extends AsyncTask<String, String, String> {
+    public class GetTv extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -146,7 +150,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
                     season.setAir_date(jsonObject3.getString("air_date"));
                     season.setEpisode_count(jsonObject3.getInt("episode_count"));
                     season.setOverview(jsonObject3.getString("overview"));
-                    season.setPoster_path(jsonObject3.getString("poster_pasth"));
+                    season.setPoster_path(jsonObject3.getString("poster_path"));
                     season.setSeason_number(jsonObject3.getInt("season_number"));
 
                 }
@@ -155,14 +159,12 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
                 e.printStackTrace();
             }
             dataInTv(tvList);
-            dataInSeason(seasonList);
+            seasonRecyclerView(seasonList);
         }
     }
 
-    private void dataInSeason(List<seasonClass> seasonList){
 
-    }
-
+    // This function gets the TV data and displays it, if the status is empty it is automatically Not Watching
     private void dataInTv(List<TvClass> tvList){
 
 
@@ -174,11 +176,6 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         txt_TVStatus = findViewById(R.id.txt_TVStatus);
         tv_TVPoster = findViewById(R.id.tv_TVPoster);
 
-//        tv_MovieViewTitle = findViewById(R.id.tv_MovieViewTitle);
-//        tv_Language = findViewById(R.id.tv_Language);
-//        tv_Overview = findViewById(R.id.tv_Overview);
-//        tv_status = findViewById(R.id.tv_status);
-//        ImageView = findViewById(R.id.img_MoviePoster);
 
         tv_TVViewTitle.setText(i.getStringExtra("name"));
         tv_TVLanguage.setText(i.getStringExtra("original_language"));
@@ -194,6 +191,17 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
+    //This function loads the seasons of the specified television series
+    private void seasonRecyclerView(List<seasonClass> seasonList){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        this.seasonAdapter = new seasonAdapter(this, seasonList);
+        this.seasonRecycler = findViewById(R.id.recycle_TVSeasons) ;
+        seasonRecycler.setLayoutManager(layoutManager);
+        seasonRecycler.setAdapter(seasonAdapter);
+
+    }
+
+    // This function allows for the swapping between main activity and discover activity
     @Override
     public void onClick(View v) {
         switch (v.getId()){
