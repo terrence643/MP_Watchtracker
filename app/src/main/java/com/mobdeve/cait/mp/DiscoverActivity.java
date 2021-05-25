@@ -29,6 +29,8 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
     private static String popularMovie = "https://api.themoviedb.org/3/movie/popular?api_key="+ BuildConfig.TMDB_API;
     private static String popularTv = "https://api.themoviedb.org/3/tv/popular?api_key="+ BuildConfig.TMDB_API;
+    private static String searchMovie = "https://api.themoviedb.org/3/search/movie?api_key="+BuildConfig.TMDB_API+"&query=";
+    private static String searchTv = "https://api.themoviedb.org/3/search/tv?api_key="+BuildConfig.TMDB_API+"&query=";
     public List<MovieClass> movieList;
     public List<TvClass> tvList;
     public RecyclerView recycler_Movie;
