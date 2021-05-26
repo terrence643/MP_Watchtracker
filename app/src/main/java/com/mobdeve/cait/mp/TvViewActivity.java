@@ -152,7 +152,8 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
                     season.setOverview(jsonObject3.getString("overview"));
                     season.setPoster_path(jsonObject3.getString("poster_path"));
                     season.setSeason_number(jsonObject3.getInt("season_number"));
-
+                    Log.d("seasonClass", season.getName());
+                    seasonList.add(season);
                 }
 
             } catch (JSONException e) {
@@ -198,7 +199,6 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         this.seasonRecycler = findViewById(R.id.recycle_TVSeasons) ;
         seasonRecycler.setLayoutManager(layoutManager);
         seasonRecycler.setAdapter(seasonAdapter);
-
     }
 
     // This function allows for the swapping between main activity and discover activity
