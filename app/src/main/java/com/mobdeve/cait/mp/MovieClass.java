@@ -1,5 +1,8 @@
 package com.mobdeve.cait.mp;
 
+import android.content.Context;
+import android.widget.Toast;
+
 public class MovieClass {
 
     String id;
@@ -8,6 +11,9 @@ public class MovieClass {
     String language;
     String overview;
 
+    public class showMovie{
+
+    }
     public String getLanguage() {
         return language;
     }
@@ -57,5 +63,12 @@ public class MovieClass {
     }
 
     public MovieClass() {
+
+
     }
+
+    public static void message(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
+
 }
