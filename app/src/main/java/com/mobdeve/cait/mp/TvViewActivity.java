@@ -85,7 +85,8 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         protected String doInBackground(String... strings) {
             Intent i = getIntent();
             String current = "";
-            lookTv = "https://api.themoviedb.org/3/tv/"+ i.getIntExtra("id",0)+"?api_key="+BuildConfig.TMDB_API;
+            lookTv = "https://api.themoviedb.org/3/tv/"+ i.getStringExtra("id")+"?api_key="+BuildConfig.TMDB_API;
+            Log.d("looktv",lookTv);
             try{
                 URL url;
                 HttpURLConnection urlConnection = null;
@@ -123,42 +124,40 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
 
         @Override
         protected void onPostExecute(String s) {
+            Log.d("logdbeforetry",s);
             try{
                 JSONObject jsonObject = new JSONObject(s);
-                JSONArray jsonArray =  jsonObject.getJSONArray("results");
 
+                JSONArray jsonArray =  jsonObject.getJSONArray("seasons");
+                Log.d("logd", jsonArray.toString());
                 for(int i = 0; i < jsonArray.length() ; i++){
 
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                     TvClass model = new TvClass();
+                    seasonClass seasonList = new seasonClass();
                     model.setImg(jsonObject1.getString("poster_path"));
                     model.setId(jsonObject1.getString("id"));
                     model.setName(jsonObject1.getString("original_title"));
                     tvList.add(model);
 
-                }
-                JSONObject jsonObject2 = new JSONObject(s);
-                JSONArray jsonArray1 = jsonObject2.getJSONArray("seasons");
+                    seasonList.setSeason_number(jsonObject1.getInt("season_number"));
+                    seasonList.setPoster_path(jsonObject1.getString("poster_path"));
+                    seasonList.setOverview(jsonObject1.getString("overview"));
+                    seasonList.setAir_date(jsonObject1.getString("air_date"));
+                    seasonList.setEpisode_count(jsonObject1.getInt("episode_count"));
+                    seasonList.setId(jsonObject1.getInt("id"));
+                    seasonList.setName(jsonObject1.getString("name"));
 
-                for(int i = 0; i <jsonArray1.length(); i++){
-                    JSONObject jsonObject3 = jsonArray1.getJSONObject(i);
-
-                    seasonClass season = new seasonClass();
-                    season.setName(jsonObject3.getString("name"));
-                    season.setId(jsonObject3.getInt("id"));
-                    season.setAir_date(jsonObject3.getString("air_date"));
-                    season.setEpisode_count(jsonObject3.getInt("episode_count"));
-                    season.setOverview(jsonObject3.getString("overview"));
-                    season.setPoster_path(jsonObject3.getString("poster_path"));
-                    season.setSeason_number(jsonObject3.getInt("season_number"));
-                    Log.d("seasonClass", season.getName());
-                    seasonList.add(season);
+                    Log.d("tvlisthere",tvList.toString());
                 }
+
 
             } catch (JSONException e) {
+                Log.d("logdcatch",e.toString());
                 e.printStackTrace();
             }
+            Log.d("logdafter","helloafter");
             dataInTv(tvList);
             seasonRecyclerView(seasonList);
         }

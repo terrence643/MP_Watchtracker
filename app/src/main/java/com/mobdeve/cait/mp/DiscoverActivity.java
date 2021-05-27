@@ -128,6 +128,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         protected void onPostExecute(String s) {
+
             try{
                 JSONObject jsonObject = new JSONObject(s);
                 JSONArray jsonArray =  jsonObject.getJSONArray("results");

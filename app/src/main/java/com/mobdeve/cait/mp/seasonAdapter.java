@@ -1,6 +1,7 @@
 package com.mobdeve.cait.mp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +29,18 @@ public class seasonAdapter extends RecyclerView.Adapter<seasonAdapter.MyViewHold
     }
 
     public seasonAdapter(Context seasonContext, List<seasonClass> seasonData) {
+        Log.d("seasonadapter",seasonContext.toString());
+        Log.d("seasonadapter",seasonData.toString());
         this.seasonContext = seasonContext;
         this.seasonData = seasonData;
+
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d("parent",parent.toString());
+        Log.d("view",Integer.toString(viewType));
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.season_layout, parent, false) ;
         MyViewHolder myViewHolder = new MyViewHolder(view, seasonListener) ;
         return myViewHolder ;
