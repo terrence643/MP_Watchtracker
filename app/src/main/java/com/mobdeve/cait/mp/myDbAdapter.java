@@ -53,15 +53,16 @@ public class myDbAdapter {
         return  count;
     }
 
-    public int updateName(String oldName , String newName)
+    public int updateName(String oldStatus , String newStatus)
     {
         SQLiteDatabase db = myhelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(myDbHelper.MOVIENAME,newName);
-        String[] whereArgs= {oldName};
-        int count =db.update(myDbHelper.TABLE_NAME,contentValues, myDbHelper.MOVIENAME+" = ?",whereArgs );
+        contentValues.put(myDbHelper.MOVIENAME,newStatus);
+        String[] whereArgs= {oldStatus};
+        int count =db.update(myDbHelper.TABLE_NAME,contentValues, myDbHelper.STATUS+" = ?",whereArgs );
         return count;
     }
+
 
     static class myDbHelper extends SQLiteOpenHelper
     {
@@ -73,7 +74,8 @@ public class myDbAdapter {
         private static final String OVERVIEW= "Overview";    // Column III
         private static final String LANGUAGE= "Language"; // Column IV
         private static final String RELEASE= "Release Date"; // Column V
-        private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+" ("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+MOVIENAME+" VARCHAR(255) ,"+ OVERVIEW+" VARCHAR(225), "+LANGUAGE+" VARCHART(255), "+LANGUAGE+" VARCHART(255));";
+        private static final String STATUS= "Status"; //Column VI
+        private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+" ("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+MOVIENAME+" VARCHAR(255) ,"+ OVERVIEW+" VARCHAR(225), "+LANGUAGE+" VARCHART(255), "+LANGUAGE+" VARCHART(255), "+STATUS+" VARCHART(255));";
         private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+TABLE_NAME;
         private Context context;
 
