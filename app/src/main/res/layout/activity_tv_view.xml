@@ -118,8 +118,8 @@
 
         <RadioGroup
             android:id="@+id/rg_TVgroup"
-            android:layout_width="145dp"
-            android:layout_height="98dp"
+            android:layout_width="146dp"
+            android:layout_height="94dp"
             android:layout_marginStart="31dp"
             app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
             app:layout_constraintTop_toBottomOf="@+id/textView3">
@@ -189,8 +189,8 @@
 
         <CheckBox
             android:id="@+id/check_TVFavorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="111dp"
+            android:layout_height="21dp"
             android:layout_marginStart="31dp"
             android:layout_marginTop="10dp"
             android:text="CheckBox"
@@ -205,6 +205,17 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toBottomOf="@+id/tv_TVPoster" />
+
+        <Button
+            android:id="@+id/btn_tvUpdate"
+            android:layout_width="108dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="4dp"
+            android:text="Update"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
+            app:layout_constraintTop_toBottomOf="@+id/rg_TVgroup" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
