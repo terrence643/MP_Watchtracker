@@ -15,7 +15,7 @@ public class myDbAdapter {
         myhelper = new myDbHelper(context);
     }
 
-    public long insertData(int id,String moviename, String overview,String language, String release)
+    public long insertData(String id,String moviename, String overview,String language)
     {
         SQLiteDatabase dbb = myhelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -23,7 +23,6 @@ public class myDbAdapter {
         contentValues.put(myDbHelper.MOVIENAME, moviename);
         contentValues.put(myDbHelper.OVERVIEW, overview);
         contentValues.put(myDbHelper.LANGUAGE, language);
-        contentValues.put(myDbHelper.RELEASE,release);
         long id2 = dbb.insert(myDbHelper.TABLE_NAME, null , contentValues);
         return id2;
     }
@@ -66,42 +65,33 @@ public class myDbAdapter {
 
     static class myDbHelper extends SQLiteOpenHelper
     {
-        private static final String DATABASE_NAME = "myList";    // Database Name
+        private static final String DATABASE_NAME = "myList.db";    // Database Name
         private static final String TABLE_NAME = "myTable";   // Table Name
         private static final int DATABASE_Version = 1;    // Database Version
         private static final String ID="_id";     // Column I (Primary Key)
         private static final String MOVIENAME = "Name";    //Column II
         private static final String OVERVIEW= "Overview";    // Column III
         private static final String LANGUAGE= "Language"; // Column IV
-        private static final String RELEASE= "Release Date"; // Column V
-        private static final String STATUS= "Status"; //Column VI
-        private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+" ("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+MOVIENAME+" VARCHAR(255) ,"+ OVERVIEW+" VARCHAR(225), "+LANGUAGE+" VARCHART(255), "+LANGUAGE+" VARCHART(255), "+STATUS+" VARCHART(255));";
+        private static final String STATUS= "Status"; //Column V
+
+        private static final String CREATE_TABLE = "CREATE TABLE "+TABLE_NAME+" ("+ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+MOVIENAME+" VARCHAR(255) ,"+ OVERVIEW+" VARCHAR(225), "+LANGUAGE+" VARCHAR(255), "+STATUS+" VARCHAR(255));";
         private static final String DROP_TABLE ="DROP TABLE IF EXISTS "+TABLE_NAME;
-        private Context context;
+
+        SQLiteDatabase database;
 
         public myDbHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_Version);
-            this.context=context;
+            database = getWritableDatabase();
         }
 
         public void onCreate(SQLiteDatabase db) {
-
-            try {
-                db.execSQL(CREATE_TABLE);
-            } catch (Exception e) {
-                MovieClass.message(context,"OnUpgrade");
-            }
+            db.execSQL(CREATE_TABLE);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            try {
-                MovieClass.message(context,"OnUpgrade");
                 db.execSQL(DROP_TABLE);
                 onCreate(db);
-            }catch (Exception e) {
-                MovieClass.message(context,"");
-            }
         }
     }
 }

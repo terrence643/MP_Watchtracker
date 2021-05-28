@@ -121,6 +121,7 @@
             android:layout_width="146dp"
             android:layout_height="94dp"
             android:layout_marginStart="31dp"
+            android:checkedButton="@id/radio_TVNot"
             app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
             app:layout_constraintTop_toBottomOf="@+id/textView3">
 

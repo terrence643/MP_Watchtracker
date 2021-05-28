@@ -121,6 +121,7 @@
             android:layout_width="147dp"
             android:layout_height="83dp"
             android:layout_marginStart="40dp"
+            android:checkedButton="@id/radio_Not"
             app:layout_constraintStart_toEndOf="@+id/img_MoviePoster"
             app:layout_constraintTop_toBottomOf="@+id/textView3">
 

@@ -7,11 +7,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -35,11 +37,11 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
     private Intent intent ;
 
     myDbAdapter dbAdapter;
-
     private  String lookMovie = new String();
     private int status_list;
     private String status_holder;
 
+    Button btn_movieUpdate;
     RadioButton radioButton;
     public TextView tv_MovieViewTitle;
     public List<MovieClass> movieList;
@@ -61,12 +63,15 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
 
         status_list= radioGroup.getCheckedRadioButtonId();
 
+        btn_movieUpdate = findViewById(R.id.btn_movieUpdate);
         this.checkFavorites = findViewById(R.id.check_favorite) ;
 
         radioButton = (RadioButton)findViewById(status_list);
         status_holder= radioButton.getText().toString();
 
-        dbAdapter.updateStatus("",status_holder);
+
+
+
         i.getStringExtra("position");
         i.getStringExtra("id");
         Log.d("movie to be displayed", i.getStringExtra("id"));
@@ -74,6 +79,13 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         GetDataMovie getDataMovie = new GetDataMovie();
         getDataMovie.execute();
 
+        btn_movieUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbAdapter.insertData(i.getStringExtra("id"),i.getStringExtra("original_title")
+                        ,i.getStringExtra("overview"),i.getStringExtra("original_language"));
+            }
+        });
     }
 
     public void buildHeader(){

@@ -41,12 +41,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView tabDiscover ;
     private Intent intent ;
 
+    myDbAdapter dbAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        dbAdapter = new myDbAdapter(this);
 
         buildHeader();
 
