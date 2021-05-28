@@ -53,11 +53,11 @@ public class myDbAdapter {
         return  count;
     }
 
-    public int updateName(String oldStatus , String newStatus)
+    public int updateStatus(String oldStatus , String newStatus)
     {
         SQLiteDatabase db = myhelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(myDbHelper.MOVIENAME,newStatus);
+        contentValues.put(myDbHelper.STATUS,newStatus);
         String[] whereArgs= {oldStatus};
         int count =db.update(myDbHelper.TABLE_NAME,contentValues, myDbHelper.STATUS+" = ?",whereArgs );
         return count;

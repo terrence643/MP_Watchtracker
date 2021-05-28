@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -33,8 +34,13 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
     private ImageView tabDiscover ;
     private Intent intent ;
 
-    private  String lookMovie = new String();
+    myDbAdapter dbAdapter;
 
+    private  String lookMovie = new String();
+    private int status_list;
+    private String status_holder;
+
+    RadioButton radioButton;
     public TextView tv_MovieViewTitle;
     public List<MovieClass> movieList;
     public ImageView ImageView;
@@ -52,9 +58,15 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
 
         buildHeader();
         this.radioGroup = findViewById(R.id.rg_group) ;
+
+        status_list= radioGroup.getCheckedRadioButtonId();
+
         this.checkFavorites = findViewById(R.id.check_favorite) ;
 
+        radioButton = (RadioButton)findViewById(status_list);
+        status_holder= radioButton.getText().toString();
 
+        dbAdapter.updateStatus("",status_holder);
         i.getStringExtra("position");
         i.getStringExtra("id");
         Log.d("movie to be displayed", i.getStringExtra("id"));
