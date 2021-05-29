@@ -5,8 +5,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -37,6 +39,9 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
 
     private  String lookTv = new String();
 
+    DataBaseHelper myDb = new DataBaseHelper(this);
+    Button btn_tvUpdate;
+    public RadioButton radioButton;
     public TextView tv_TVViewTitle;
     public RecyclerView seasonRecycler;
     public seasonAdapter seasonAdapter;
@@ -48,6 +53,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
     public TextView txt_TVStatus;
     public RadioGroup radioGroup ;
     public CheckBox checkFavorites;
+    public String radiotext;
 
     @Override
     protected void onCreate(Bundle savedInstancedState) {
@@ -57,7 +63,16 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
 
         buildHeader();
         this.radioGroup = findViewById(R.id.rg_TVgroup) ;
+        btn_tvUpdate = findViewById(R.id.btn_tvUpdate);
         this.checkFavorites = findViewById(R.id.check_TVFavorite);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                radioButton = (RadioButton) findViewById(checkedId);
+                radiotext = radioButton.getText().toString();
+            }
+        });
 
         i.getStringExtra("position");
         i.getStringExtra("id");
@@ -66,6 +81,22 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         GetTv getTv = new GetTv();
         getTv.execute();
 
+        //        btn_tvAdd.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//
+//                myDb.insertData(i.getStringExtra("id"),radiotext);
+//                txt_TVStatus.setText(radiotext);
+//            }
+//        });
+
+        btn_tvUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDb.updateData(i.getStringExtra("id"),radiotext);
+                txt_TVStatus.setText(radiotext);
+            }
+        });
     }
 
     public void buildHeader(){

@@ -54,7 +54,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean updateDate(String movieID, String status){
+    public boolean updateData(String movieID, String status){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(MOVIEID,movieID);

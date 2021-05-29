@@ -38,6 +38,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
 
 
     private  String lookMovie = new String();
+    private String recommendMovie = new String();
     private int status_list;
     private String status_holder;
 
@@ -86,10 +87,20 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         GetDataMovie getDataMovie = new GetDataMovie();
         getDataMovie.execute();
 
+//        btn_movieAdd.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//
+//                myDb.insertData(i.getStringExtra("id"),radiotext);
+//                tv_status.setText(radiotext);
+//            }
+//        });
+
         btn_movieUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myDb.insertData(i.getStringExtra("id"),radiotext);
+
+                myDb.updateData(i.getStringExtra("id"),radiotext);
                 tv_status.setText(radiotext);
             }
         });
@@ -127,6 +138,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         protected String doInBackground(String... strings) {
             Intent i = getIntent();
             String current = "";
+            recommendMovie =  "https://api.themoviedb.org/3/movie/"+ i.getIntExtra("id",0)+"/recommendations?api_key="+BuildConfig.TMDB_API;
             lookMovie = "https://api.themoviedb.org/3/movie/"+ i.getIntExtra("id",0)+"?api_key="+BuildConfig.TMDB_API;
             try{
                 URL url;
