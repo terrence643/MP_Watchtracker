@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteTransactionListener;
 
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -20,6 +21,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public DataBaseHelper(Context context){
         super(context, DATABASE_NAME, null,1);
 
+    }
+
+    public Cursor getAllData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
+        return res;
     }
 
     @Override
@@ -45,5 +52,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         else{
             return true;
         }
+    }
+
+    public boolean updateDate(String movieID, String status){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MOVIEID,movieID);
+        contentValues.put(STATUS,status);
+        db.update(TABLE_NAME, contentValues, " MOVIEID = ? ",new String[] { movieID });
+        return true;
+    }
+
+    public Integer deleteData(String movieID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME,"MOVIEID = ?",new String[] {movieID});
     }
 }
