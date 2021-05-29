@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
@@ -41,14 +42,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView tabDiscover ;
     private Intent intent ;
 
-    myDbAdapter dbAdapter;
+    DataBaseHelper myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbAdapter = new myDbAdapter(this);
+        myDb = new DataBaseHelper(this);
+
 
         buildHeader();
 

@@ -1,0 +1,49 @@
+package com.mobdeve.cait.mp;
+
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+
+public class DataBaseHelper extends SQLiteOpenHelper {
+    public static final String DATABASE_NAME = "List.db";
+    public static final String TABLE_NAME = "ListData_Table";
+    public static final String MOVIEID = "MOVIEID";
+    public static final String STATUS = "STATUS";
+
+
+
+
+    public DataBaseHelper(Context context){
+        super(context, DATABASE_NAME, null,1);
+
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE "+TABLE_NAME+" (MOVIEID VARCHAR(255) PRIMARY KEY , STATUS VARCHAR(255)) ");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        onCreate(db);
+    }
+
+    public boolean insertData(String MovieId, String Status){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MOVIEID,MovieId);
+        contentValues.put(STATUS,Status);
+        long result = db.insert(TABLE_NAME,null,contentValues);
+        if (result == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+}

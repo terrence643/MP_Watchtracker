@@ -36,11 +36,12 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
     private ImageView tabDiscover ;
     private Intent intent ;
 
-    myDbAdapter dbAdapter;
+
     private  String lookMovie = new String();
     private int status_list;
     private String status_holder;
 
+    DataBaseHelper myDb = new DataBaseHelper(this);
     Button btn_movieUpdate;
     RadioButton radioButton;
     public TextView tv_MovieViewTitle;
@@ -51,6 +52,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
     public TextView tv_status;
     public RadioGroup radioGroup ;
     public CheckBox checkFavorites;
+    public String radiotext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +63,18 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         buildHeader();
         this.radioGroup = findViewById(R.id.rg_group) ;
 
-        status_list= radioGroup.getCheckedRadioButtonId();
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                radioButton = (RadioButton) findViewById(checkedId);
+                radiotext = radioButton.getText().toString();
+
+            }
+        });
 
         btn_movieUpdate = findViewById(R.id.btn_movieUpdate);
         this.checkFavorites = findViewById(R.id.check_favorite) ;
 
-        radioButton = (RadioButton)findViewById(status_list);
-        status_holder= radioButton.getText().toString();
 
 
 
@@ -82,10 +89,11 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         btn_movieUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbAdapter.insertData(i.getStringExtra("id"),i.getStringExtra("original_title")
-                        ,i.getStringExtra("overview"),i.getStringExtra("original_language"));
+                myDb.insertData(i.getStringExtra("id"),radiotext);
+                tv_status.setText(radiotext);
             }
         });
+
     }
 
     public void buildHeader(){
