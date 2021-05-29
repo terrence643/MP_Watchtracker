@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -81,12 +82,18 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         GetTv getTv = new GetTv();
         getTv.execute();
 
-        //        btn_tvAdd.setOnClickListener(new View.OnClickListener(){
+//        btn_tvAdd.setOnClickListener(new View.OnClickListener(){
 //            @Override
 //            public void onClick(View v) {
 //
-//                myDb.insertData(i.getStringExtra("id"),radiotext);
-//                txt_TVStatus.setText(radiotext);
+//        if (myDb.insertData(i.getStringExtra("id"),radiotext)){
+//            Toast toast = Toast.makeText(getApplicationContext(),"Cannot Add",Toast.LENGTH_LONG);
+//        }
+//        else {
+//              myDb.insertData(i.getStringExtra("id"),radiotext);
+//              txt_TVStatus.setText(radiotext);
+//        }
+//
 //            }
 //        });
 

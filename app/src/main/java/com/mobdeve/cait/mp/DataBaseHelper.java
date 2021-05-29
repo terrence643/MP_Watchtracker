@@ -45,13 +45,31 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(MOVIEID,MovieId);
         contentValues.put(STATUS,Status);
-        long result = db.insert(TABLE_NAME,null,contentValues);
-        if (result == -1){
-            return false;
+
+        if(CheckIsDataAlreadyInDBorNot(TABLE_NAME,MovieId)) {
+            long result = db.insert(TABLE_NAME, null, contentValues);
+            if (result == -1) {
+                return false;
+            } else {
+                return true;
+            }
         }
         else{
-            return true;
+            return false;
         }
+    }
+
+
+    public boolean CheckIsDataAlreadyInDBorNot(String TableName, String MovieId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String Query = "Select * from " + TableName + " IF EXISTS " + MovieId ;
+        Cursor cursor = db.rawQuery(Query, null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
     }
 
     public boolean updateData(String movieID, String status){
