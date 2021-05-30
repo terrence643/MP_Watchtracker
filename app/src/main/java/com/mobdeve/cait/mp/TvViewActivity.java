@@ -51,8 +51,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
     private TextView tv_TVLanguage;
     private TextView tv_TVOverview;
     private TextView txt_TVStatus;
-    private TextView txt_TVSeasons ;
-    private TextView txt_TVEpisodes ;
+    private TextView tv_TVAirdate ;
     private RadioGroup radioGroup ;
     private CheckBox checkFavorites;
     private String radiotext;
@@ -102,8 +101,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         this.tv_TVOverview = findViewById(R.id.tv_TVOverview);
         this.txt_TVStatus = findViewById(R.id.txt_TVStatus);
         this.tv_TVPoster = findViewById(R.id.tv_TVPoster);
-        this.txt_TVSeasons = findViewById(R.id.tv_TVSeasons) ;
-        this.txt_TVEpisodes = findViewById(R.id.tv_TVEpisodes) ;
+        this.tv_TVAirdate = findViewById(R.id.tv_TVAirdate) ;
         this.radioGroup = findViewById(R.id.rg_TVgroup) ;
         this.btn_tvUpdate = findViewById(R.id.btn_tvUpdate);
 
@@ -162,7 +160,6 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
             String current = "";
             String recommendTv =  "https://api.themoviedb.org/3/tv/"+tvShow.getId()+"/recommendations?api_key="+BuildConfig.TMDB_API;
             String similarTV = "https://api.themoviedb.org/3/tv/"+tvShow.getId()+"/similar?api_key="+BuildConfig.TMDB_API ;
-            String popularTv = "https://api.themoviedb.org/3/tv/popular?api_key="+ BuildConfig.TMDB_API;
             Log.d(TAG, "doInBackground: recommendtv url = " + recommendTv);
             Log.d(TAG, "doInBackground: GUMANA");
             try{
@@ -170,7 +167,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
                 HttpURLConnection urlConnection = null;
 
                 try{
-                    url = new URL(similarTV);
+                    url = new URL(recommendTv);
                     urlConnection = (HttpURLConnection) url.openConnection();
 
                     InputStream inputStream = urlConnection.getInputStream();
@@ -216,8 +213,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
                     model.setName(jsonObject1.getString("name"));
                     model.setLanguage(jsonObject1.getString("original_language"));
                     model.setOverview(jsonObject1.getString("overview"));
-//                    model.setEpisodes(jsonObject1.getString("number_of_episodes"));
-//                    model.setSeasons(jsonObject1.getString("number_of_seasons"));
+                    model.setAirdate(jsonObject1.getString("first_air_date"));
                     tvList.add(model);
 
                 }
@@ -236,8 +232,8 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         tv_TVViewTitle.setText(tvShow.getName());
         tv_TVLanguage.setText(tvShow.getLanguage());
         tv_TVOverview.setText(tvShow.getOverview());
-        txt_TVSeasons.setText(tvShow.getSeasons());
-        txt_TVEpisodes.setText(tvShow.getEpisodes());
+        tv_TVAirdate.setText(tvShow.getAirdate());
+
 
         Picasso.get().load("https://image.tmdb.org/t/p/w500"+i.getStringExtra("poster_path")).into(tv_TVPoster);
 
@@ -281,8 +277,8 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         tvShow.setImg(tvList.get(position).getImg());
         tvShow.setOverview(tvList.get(position).getOverview());
         tvShow.setLanguage(tvList.get(position).getLanguage());
-        tvShow.setEpisodes(tvList.get(position).getEpisodes());
-        tvShow.setSeasons(tvList.get(position).getSeasons());
+        tvShow.setAirdate(tvList.get(position).getAirdate());
+
     }
 
     // This function allows for the swapping between main activity and discover activity

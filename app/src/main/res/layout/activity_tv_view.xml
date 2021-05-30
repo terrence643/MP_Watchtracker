@@ -235,14 +235,14 @@
                 android:layout_marginStart="96dp"
                 android:layout_marginTop="56dp"
                 android:fontFamily="@font/helvetica"
-                android:text="Seasons:"
+                android:text="First air date:"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
                 app:layout_constraintTop_toBottomOf="@+id/button2" />
 
             <TextView
-                android:id="@+id/tv_TVSeasons"
+                android:id="@+id/tv_TVAirdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -252,31 +252,6 @@
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/btn_tvUpdate" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="112dp"
-                android:layout_marginBottom="6dp"
-                android:fontFamily="@font/helvetica"
-                android:text="Episodes: "
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/tv_TVOverview"
-                app:layout_constraintStart_toEndOf="@+id/textView10" />
-
-            <TextView
-                android:id="@+id/tv_TVEpisodes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/helveticalight"
-                android:text="TextView"
-                android:textColor="#FFFFFF"
-                app:layout_constraintStart_toEndOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/tv_TVSeasons" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

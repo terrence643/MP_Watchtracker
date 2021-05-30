@@ -12,8 +12,7 @@ public class TvClass implements Parcelable {
     String img;
     String language;
     String overview;
-    String episodes ;
-    String seasons ;
+    String airdate ;
 
     protected TvClass(Parcel in) {
         id = in.readString();
@@ -21,8 +20,8 @@ public class TvClass implements Parcelable {
         img = in.readString();
         language = in.readString();
         overview = in.readString();
-        episodes = in.readString();
-        seasons = in.readString();
+        airdate = in.readString();
+
     }
 
     public static final Creator<TvClass> CREATOR = new Creator<TvClass>() {
@@ -77,30 +76,21 @@ public class TvClass implements Parcelable {
         this.img = img;
     }
 
-    public String getEpisodes() {
-        return episodes;
+    public String getAirdate() {
+        return airdate;
     }
 
-    public void setEpisodes(String episodes) {
-        this.episodes = episodes;
+    public void setAirdate(String airdate) {
+        this.airdate = airdate;
     }
 
-    public String getSeasons() {
-        return seasons;
-    }
-
-    public void setSeasons(String seasons) {
-        this.seasons = seasons;
-    }
-
-    public TvClass(String id, String name, String img, String language, String overview, String episodes, String seasons) {
+    public TvClass(String id, String name, String img, String language, String overview, String airdate) {
         this.id = id;
         this.name = name;
         this.img = img;
         this.language = language;
         this.overview = overview;
-        this.episodes = episodes ;
-        this.seasons = seasons ;
+        this.airdate = airdate ;
     }
 
     public TvClass() {
@@ -118,7 +108,7 @@ public class TvClass implements Parcelable {
         dest.writeString(img);
         dest.writeString(language);
         dest.writeString(overview);
-        dest.writeString(episodes);
-        dest.writeString(seasons);
+        dest.writeString(airdate);
+
     }
 }

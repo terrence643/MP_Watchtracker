@@ -220,9 +220,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
                     model.setName(jsonObject1.getString("name"));
                     model.setLanguage(jsonObject1.getString("original_language"));
                     model.setOverview(jsonObject1.getString("overview"));
-//                    Log.d("EPISODES", "onPostExecute: episodes = " + jsonObject1.getString("number_of_episodes")) ;
-//                    model.setEpisodes(jsonObject1.getString("number_of_episodes"));
-//                    model.setSeasons(jsonObject1.getString("number_of_seasons"));
+                    model.setAirdate(jsonObject1.getString("first_air_date"));
                     tvList.add(model);
 
                 }
@@ -300,7 +298,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         tvShow.setImg(tvList.get(position).getImg());
         tvShow.setOverview(tvList.get(position).getOverview());
         tvShow.setLanguage(tvList.get(position).getLanguage());
-        tvShow.setEpisodes(tvList.get(position).getEpisodes());
-        tvShow.setSeasons(tvList.get(position).getSeasons());
+        tvShow.setAirdate(tvList.get(position).getAirdate());
+
     }
 }
