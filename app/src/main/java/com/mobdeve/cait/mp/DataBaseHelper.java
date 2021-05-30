@@ -62,9 +62,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public boolean CheckIsDataAlreadyInDBorNot(String TableName, String MovieId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String Query = "Select * from " + TableName + " IF EXISTS " + MovieId ;
+        String Query = "Select * from " + TableName + " WHERE " + MovieId ;
         Cursor cursor = db.rawQuery(Query, null);
         if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
+
+    public boolean CheckStatus(String TableName,String Status){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String Query =" Select * from " + TableName +" WHERE " + Status;
+        Cursor cursor = db.rawQuery(Query,null);
+        if(cursor.getCount()<=0){
             cursor.close();
             return false;
         }
