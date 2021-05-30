@@ -161,16 +161,22 @@
                     android:text="Finished watching"
                     android:textSize="12sp" />
 
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Button" />
+
             </RadioGroup>
 
             <Button
                 android:id="@+id/btn_movieUpdate"
                 android:layout_width="91dp"
                 android:layout_height="35dp"
-                android:layout_marginStart="35dp"
+                android:layout_marginStart="5dp"
                 android:text="Update"
                 android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/img_MoviePoster"
+                app:layout_constraintStart_toEndOf="@+id/btn_movieAdd"
                 app:layout_constraintTop_toBottomOf="@+id/rg_group" />
 
             <TextView
@@ -215,6 +221,16 @@
                 android:text="Add to favorites"
                 app:layout_constraintStart_toEndOf="@+id/img_MoviePoster"
                 app:layout_constraintTop_toBottomOf="@+id/tv_MovieViewTitle" />
+
+            <Button
+                android:id="@+id/btn_movieAdd"
+                android:layout_width="70dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="35dp"
+                android:text="ADD"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/img_MoviePoster"
+                app:layout_constraintTop_toBottomOf="@+id/rg_group" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
