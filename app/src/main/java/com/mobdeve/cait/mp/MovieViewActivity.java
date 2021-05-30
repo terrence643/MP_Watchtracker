@@ -62,6 +62,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
     private MovieAdapter movieAdapter ;
     private MovieClass movie ;
 
+    private String movieID ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +70,8 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
 
         Intent i = getIntent();
         movie = i.getParcelableExtra("movieParcel") ;
-
+        movieID = movie.getId() ;
+        Log.d("MOVIE//", "onCreate: movieID = " + movieID);
         buildHeader();
         buildViews();
         displayMovie();
@@ -87,7 +89,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         this.tabDiscover = findViewById(R.id.img_tabDiscover) ;
         this.tabName = findViewById(R.id.txt_tabname) ;
 
-        tabName.setText("HOME");
+        tabName.setText("Movie Details");
 
         tabHome.setOnClickListener(this);
         tabDiscover.setOnClickListener(this);
@@ -110,41 +112,44 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         this.btn_movieAdd = findViewById(R.id.btn_movieAdd);
 
 
-//        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                radioButton = (RadioButton) findViewById(checkedId);
-//                radiotext = radioButton.getText().toString();
-//
-//            }
-//        });
-//
-//        btn_movieAdd.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                if (myDb.insertData(movie.getId(),radiotext)){
-//                    Toast toast = Toast.makeText(getApplicationContext(),"Cannot Add",Toast.LENGTH_LONG);
-//                }
-//                else {
-//                    myDb.insertData(movie.getId(),radiotext);
-//                    tv_status.setText(radiotext);
-//                }
-//            }
-//        });
-//
-//        btn_movieUpdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (radiotext.equalsIgnoreCase("not watching")){
-//                    myDb.deleteData(intent.getStringExtra("id"));
-//                }
-//                else {
-//                    myDb.updateData(movie.getId(), radiotext);
-//                }
-//                tv_status.setText(radiotext);
-//            }
-//        });
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                radioButton = (RadioButton) findViewById(checkedId);
+                radiotext = radioButton.getText().toString();
+
+            }
+        });
+
+        btn_movieAdd.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (myDb.insertData(movieID,radiotext)){
+                    Toast toast = Toast.makeText(getApplicationContext(),"Cannot Add",Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else {
+                    myDb.insertData(movieID,radiotext);
+                    tv_status.setText(radiotext);
+                    Toast toast = Toast.makeText(getApplicationContext(),"Added",Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
+
+        btn_movieUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (radiotext.equalsIgnoreCase("not watching")){
+                    myDb.deleteData(intent.getStringExtra("id"));
+                }
+                else {
+                    myDb.updateData(movie.getId(), radiotext);
+                }
+                tv_status.setText(radiotext);
+            }
+        });
     }
 
     //set the onclick function of the tabs
