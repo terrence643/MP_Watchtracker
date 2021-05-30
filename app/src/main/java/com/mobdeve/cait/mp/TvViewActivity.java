@@ -106,45 +106,45 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         this.tvList = new ArrayList<>() ;
         this.seasonList = new ArrayList<>() ;
 
-        //set onclick(s)
-        //        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-        ////            @Override
-        ////            public void onCheckedChanged(RadioGroup group, int checkedId) {
-        ////                radioButton = (RadioButton) findViewById(checkedId);
-        ////                radiotext = radioButton.getText().toString();
-        ////            }
-        ////        });
-        //
-        //
-        //
-        //
-        //
-        ////        btn_tvAdd.setOnClickListener(new View.OnClickListener(){
-        ////            @Override
-        ////            public void onClick(View v) {
-        ////
-        ////        if (myDb.insertData(i.getStringExtra("id"),radiotext)){
-        ////            Toast toast = Toast.makeText(getApplicationContext(),"Cannot Add",Toast.LENGTH_LONG);
-        ////        }
-        ////        else {
-        ////              myDb.insertData(i.getStringExtra("id"),radiotext);
-        ////              txt_TVStatus.setText(radiotext);
-        ////        }
-        ////
-        ////            }
-        ////        });
-        btn_tvUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (radiotext.equalsIgnoreCase("not watching")){
-                    myDb.deleteData(intent.getStringExtra("id"));
-                }
-                else{
-                myDb.updateData(tvShow.getId(),radiotext);
-                }
-                txt_TVStatus.setText(radiotext);
-            }
-        });
+//        set onclick(s)
+//                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                        radioButton = (RadioButton) findViewById(checkedId);
+//                        radiotext = radioButton.getText().toString();
+//                    }
+//                });
+//
+//
+//
+//
+//
+//                btn_tvAdd.setOnClickListener(new View.OnClickListener(){
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                if (myDb.insertData(i.getStringExtra("id"),radiotext)){
+//                    Toast toast = Toast.makeText(getApplicationContext(),"Cannot Add",Toast.LENGTH_LONG);
+//                }
+//                else {
+//                      myDb.insertData(i.getStringExtra("id"),radiotext);
+//                      txt_TVStatus.setText(radiotext);
+//                }
+//
+//                    }
+//                });
+//        btn_tvUpdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (radiotext.equalsIgnoreCase("not watching")){
+//                    myDb.deleteData(intent.getStringExtra("id"));
+//                }
+//                else{
+//                myDb.updateData(tvShow.getId(),radiotext);
+//                }
+//                txt_TVStatus.setText(radiotext);
+//            }
+//        });
     }
 
 

@@ -110,41 +110,41 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         this.btn_movieAdd = findViewById(R.id.btn_movieAdd);
         this.checkFavorites = findViewById(R.id.check_favorite) ;
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                radioButton = (RadioButton) findViewById(checkedId);
-                radiotext = radioButton.getText().toString();
-
-            }
-        });
-
-        btn_movieAdd.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if (myDb.insertData(movie.getId(),radiotext)){
-                    Toast toast = Toast.makeText(getApplicationContext(),"Cannot Add",Toast.LENGTH_LONG);
-                }
-                else {
-                    myDb.insertData(movie.getId(),radiotext);
-                    tv_status.setText(radiotext);
-                }
-            }
-        });
-
-        btn_movieUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (radiotext.equalsIgnoreCase("not watching")){
-                    myDb.deleteData(intent.getStringExtra("id"));
-                }
-                else {
-                    myDb.updateData(movie.getId(), radiotext);
-                }
-                tv_status.setText(radiotext);
-            }
-        });
+//        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                radioButton = (RadioButton) findViewById(checkedId);
+//                radiotext = radioButton.getText().toString();
+//
+//            }
+//        });
+//
+//        btn_movieAdd.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                if (myDb.insertData(movie.getId(),radiotext)){
+//                    Toast toast = Toast.makeText(getApplicationContext(),"Cannot Add",Toast.LENGTH_LONG);
+//                }
+//                else {
+//                    myDb.insertData(movie.getId(),radiotext);
+//                    tv_status.setText(radiotext);
+//                }
+//            }
+//        });
+//
+//        btn_movieUpdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (radiotext.equalsIgnoreCase("not watching")){
+//                    myDb.deleteData(intent.getStringExtra("id"));
+//                }
+//                else {
+//                    myDb.updateData(movie.getId(), radiotext);
+//                }
+//                tv_status.setText(radiotext);
+//            }
+//        });
     }
 
     //set the onclick function of the tabs
