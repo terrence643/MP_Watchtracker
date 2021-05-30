@@ -35,7 +35,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_layout, parent, false) ;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.icon_img_layout, parent, false) ;
         MyViewHolder myViewHolder = new MyViewHolder(view, movieListener) ;
         return myViewHolder ;
     }
@@ -59,7 +59,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
         public MyViewHolder(@NonNull View itemView, OnItemClickListener listener){
             super(itemView);
-            moviePoster = itemView.findViewById(R.id.moviePoster);
+            moviePoster = itemView.findViewById(R.id.iconPoster);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

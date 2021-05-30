@@ -1,6 +1,9 @@
 package com.mobdeve.cait.mp;
 
-public class TvClass {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class TvClass implements Parcelable {
 
     String id;
     String name;
@@ -9,6 +12,25 @@ public class TvClass {
     String overview;
 
 
+    protected TvClass(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        img = in.readString();
+        language = in.readString();
+        overview = in.readString();
+    }
+
+    public static final Creator<TvClass> CREATOR = new Creator<TvClass>() {
+        @Override
+        public TvClass createFromParcel(Parcel in) {
+            return new TvClass(in);
+        }
+
+        @Override
+        public TvClass[] newArray(int size) {
+            return new TvClass[size];
+        }
+    };
 
     public String getLanguage() {
         return language;
@@ -59,5 +81,19 @@ public class TvClass {
     }
 
     public TvClass() {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(img);
+        dest.writeString(language);
+        dest.writeString(overview);
     }
 }

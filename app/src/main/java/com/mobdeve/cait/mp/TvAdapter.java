@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class tvAdapter extends RecyclerView.Adapter<tvAdapter.MyViewHolder> {
+public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewHolder> {
 
     private Context tvContext;
     private List<TvClass> tvData;
@@ -27,7 +27,7 @@ public class tvAdapter extends RecyclerView.Adapter<tvAdapter.MyViewHolder> {
         tvListener = listener ;
     }
 
-    public tvAdapter(Context tvContext, List<TvClass> tvData) {
+    public TvAdapter(Context tvContext, List<TvClass> tvData) {
         this.tvContext = tvContext;
         this.tvData = tvData;
     }
@@ -35,7 +35,7 @@ public class tvAdapter extends RecyclerView.Adapter<tvAdapter.MyViewHolder> {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tv_layout, parent, false) ;
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.icon_img_layout, parent, false) ;
         MyViewHolder myViewHolder = new MyViewHolder(v, tvListener) ;
         return myViewHolder ;
     }
@@ -60,7 +60,7 @@ public class tvAdapter extends RecyclerView.Adapter<tvAdapter.MyViewHolder> {
 
         public MyViewHolder(@NonNull View itemView, OnItemClickListener listener){
             super(itemView);
-            tvPoster = itemView.findViewById(R.id.tvPoster);
+            tvPoster = itemView.findViewById(R.id.iconPoster);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

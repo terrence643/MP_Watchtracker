@@ -1,15 +1,51 @@
 package com.mobdeve.cait.mp;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.Toast;
 
-public class MovieClass {
+public class MovieClass implements Parcelable {
 
     String id;
     String name;
     String img;
     String language;
     String overview;
+
+    protected MovieClass(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        img = in.readString();
+        language = in.readString();
+        overview = in.readString();
+    }
+
+    public static final Creator<MovieClass> CREATOR = new Creator<MovieClass>() {
+        @Override
+        public MovieClass createFromParcel(Parcel in) {
+            return new MovieClass(in);
+        }
+
+        @Override
+        public MovieClass[] newArray(int size) {
+            return new MovieClass[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(img);
+        dest.writeString(language);
+        dest.writeString(overview);
+    }
 
     public class showMovie{
 

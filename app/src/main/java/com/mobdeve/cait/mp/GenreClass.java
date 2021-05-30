@@ -2,7 +2,7 @@ package com.mobdeve.cait.mp;
 
 import java.io.Serializable;
 
-public class genreClass implements Serializable {
+public class GenreClass implements Serializable {
     int id;
     String name;
 
@@ -22,7 +22,7 @@ public class genreClass implements Serializable {
         this.name = name;
     }
 
-    public genreClass(int id, String name) {
+    public GenreClass(int id, String name) {
         this.id = id;
         this.name = name;
     }

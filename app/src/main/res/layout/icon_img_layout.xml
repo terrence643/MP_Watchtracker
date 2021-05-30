@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/moviePoster"
+        android:id="@+id/iconPoster"
         android:layout_width="130dp"
         android:layout_height="170dp"
         android:layout_weight="1"

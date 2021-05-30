@@ -31,16 +31,19 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
     private static String popularTv = "https://api.themoviedb.org/3/tv/popular?api_key="+ BuildConfig.TMDB_API;
     private static String searchMovie = "https://api.themoviedb.org/3/search/movie?api_key="+BuildConfig.TMDB_API+"&query=";
     private static String searchTv = "https://api.themoviedb.org/3/search/tv?api_key="+BuildConfig.TMDB_API+"&query=";
-    public List<MovieClass> movieList;
-    public List<TvClass> tvList;
-    public RecyclerView recycler_Movie;
-    public RecyclerView recycler_Tv;
-    public tvAdapter TvAdapter;
-    public MovieAdapter movieAdapter ;
+    private List<MovieClass> movieList;
+    private List<TvClass> tvList;
+    private RecyclerView recycler_Movie;
+    private RecyclerView recycler_Tv;
+    private com.mobdeve.cait.mp.TvAdapter TvAdapter;
+    private MovieAdapter movieAdapter ;
     private TextView tabName ;
     private ImageView tabHome ;
     private ImageView tabDiscover ;
     private Intent intent ;
+
+    private MovieClass movie ;
+    private TvClass tvShow ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         getDataTv.execute();
     }
 
+    //build the header
     public void buildHeader(){
         this.tabHome = findViewById(R.id.img_tabHome) ;
         this.tabDiscover = findViewById(R.id.img_tabDiscover) ;
@@ -69,7 +73,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         tabDiscover.setOnClickListener(this);
     }
 
-
+    //header tab onclick
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -84,6 +88,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    //get the data for movie to show in recycler_movie
     public class GetDataMovie extends AsyncTask<String, String, String> {
 
         @Override
@@ -155,6 +160,8 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
+    //get the data for tvshows to show in recycler_tv
     public class GetDataTv extends AsyncTask<String, String, String> {
 
         @Override
@@ -223,6 +230,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    //put movie data inside recycler
     private void dataInRecyclerMovie(List<MovieClass> movieList){
         //MOVIES
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -237,38 +245,57 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
             public void onItemClick(int position) {
 
                 Intent i = new Intent(DiscoverActivity.this,MovieViewActivity.class);
-                i.putExtra("name", movieList.get(position).getName());
-                i.putExtra("id",movieList.get(position).getId());
+                createMovie(position);
+                i.putExtra("movieParcel", movie) ;
                 i.putExtra("poster_path",movieList.get(position).getImg());
-                i.putExtra("overview",movieList.get(position).getOverview());
-                i.putExtra("original_language",movieList.get(position).getLanguage());
                 Log.d("MOVIECLICK", "onItemClick: " + position);
+                Log.d("MOVIECLICK", "onItemClick: " + movie.getId());
                 startActivity(i);
 
             }
         });
     }
+
+    //put tvshow data in recycler
     private void dataInRecyclerTv(List<TvClass> tvList){
         //TV list
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        this.TvAdapter = new tvAdapter(this, tvList);
+        this.TvAdapter = new TvAdapter(this, tvList);
         this.recycler_Tv = findViewById(R.id.recycler_Current) ;
         recycler_Tv.setLayoutManager(layoutManager);
         recycler_Tv.setAdapter(TvAdapter);
 
 
-        TvAdapter.setOnItemClickListener(new tvAdapter.OnItemClickListener() {
+        TvAdapter.setOnItemClickListener(new com.mobdeve.cait.mp.TvAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Intent i2 = new Intent(DiscoverActivity.this,TvViewActivity.class);
-                i2.putExtra("name",tvList.get(position).getName());
-                i2.putExtra("id",tvList.get(position).getId());
+                createTV(position);
+                i2.putExtra("tvParcel", tvShow) ;
                 i2.putExtra("poster_path",tvList.get(position).getImg());
-                i2.putExtra("overview",tvList.get(position).getOverview());
-                i2.putExtra("original_language",tvList.get(position).getLanguage());
                 startActivity(i2);
                 Log.d("TVCLICK", "onItemClick: " + position);
             }
         });
+    }
+
+    //create movie object
+    public void createMovie(int position){
+        movie = new MovieClass() ;
+        movie.setId(movieList.get(position).getId());
+        movie.setName(movieList.get(position).getName());
+        movie.setImg(movieList.get(position).getImg());
+        movie.setOverview(movieList.get(position).getOverview());
+        movie.setLanguage(movieList.get(position).getLanguage());
+    }
+
+    //create tv object
+    public  void createTV(int position){
+        tvShow = new TvClass() ;
+        tvShow.setId(tvList.get(position).getId());
+        tvShow.setName(tvList.get(position).getName());
+        tvShow.setImg(tvList.get(position).getImg());
+        tvShow.setOverview(tvList.get(position).getOverview());
+        tvShow.setLanguage(tvList.get(position).getLanguage());
     }
 }

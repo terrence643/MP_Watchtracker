@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +28,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TvViewActivity extends AppCompatActivity implements View.OnClickListener {
@@ -38,49 +38,53 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
     private ImageView tabDiscover ;
     private Intent intent;
 
+
     private  String lookTv = new String();
 
-    DataBaseHelper myDb = new DataBaseHelper(this);
-    Button btn_tvUpdate;
-    public RadioButton radioButton;
-    public TextView tv_TVViewTitle;
-    public RecyclerView seasonRecycler;
-    public seasonAdapter seasonAdapter;
-    public List<TvClass> tvList;
-    public List<seasonClass> seasonList;
-    public android.widget.ImageView tv_TVPoster;
-    public TextView tv_TVLanguage;
-    public TextView tv_TVOverview;
-    public TextView txt_TVStatus;
-    public RadioGroup radioGroup ;
-    public CheckBox checkFavorites;
-    public String radiotext;
+    private DataBaseHelper myDb = new DataBaseHelper(this);
+    private Button btn_tvUpdate;
+    private RadioButton radioButton;
+    private TextView tv_TVViewTitle;
+    private RecyclerView seasonRecycler;
+    private SeasonAdapter seasonAdapter;
+    private ImageView tv_TVPoster;
+    private TextView tv_TVLanguage;
+    private TextView tv_TVOverview;
+    private TextView txt_TVStatus;
+    private RadioGroup radioGroup ;
+    private CheckBox checkFavorites;
+    private String radiotext;
+
+    private List<TvClass> tvList;
+    private List<SeasonClass> seasonList;
+    private TvClass tvShow ;
 
     @Override
     protected void onCreate(Bundle savedInstancedState) {
         super.onCreate(savedInstancedState);
         setContentView(R.layout.activity_tv_view);
+
         Intent i = getIntent();
-
+        tvShow = i.getParcelableExtra("tvParcel") ;
         buildHeader();
-        this.radioGroup = findViewById(R.id.rg_TVgroup) ;
-        btn_tvUpdate = findViewById(R.id.btn_tvUpdate);
-        this.checkFavorites = findViewById(R.id.check_TVFavorite);
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                radioButton = (RadioButton) findViewById(checkedId);
-                radiotext = radioButton.getText().toString();
-            }
-        });
-
-        i.getStringExtra("position");
-        i.getStringExtra("id");
-        Log.d("tv to be displayed", i.getStringExtra("id"));
+        buildViews();
+        displayTV();
 
         GetTv getTv = new GetTv();
         getTv.execute();
+
+
+//        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                radioButton = (RadioButton) findViewById(checkedId);
+//                radiotext = radioButton.getText().toString();
+//            }
+//        });
+
+
+
+
 
 //        btn_tvAdd.setOnClickListener(new View.OnClickListener(){
 //            @Override
@@ -97,15 +101,10 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
 //            }
 //        });
 
-        btn_tvUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDb.updateData(i.getStringExtra("id"),radiotext);
-                txt_TVStatus.setText(radiotext);
-            }
-        });
+
     }
 
+    //initialize the header
     public void buildHeader(){
         this.tabHome = findViewById(R.id.img_tabHome) ;
         this.tabDiscover = findViewById(R.id.img_tabDiscover) ;
@@ -117,14 +116,41 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         tabDiscover.setOnClickListener(this);
     }
 
+    //initialize the views
+    public void buildViews(){
+        this.tv_TVViewTitle = findViewById(R.id.tv_TVViewTitle);
+        this.tv_TVLanguage = findViewById(R.id.tv_TVLanguage);
+        this.tv_TVOverview = findViewById(R.id.tv_TVOverview);
+        this.txt_TVStatus = findViewById(R.id.txt_TVStatus);
+        this.tv_TVPoster = findViewById(R.id.tv_TVPoster);
+        this.radioGroup = findViewById(R.id.rg_TVgroup) ;
+        this.btn_tvUpdate = findViewById(R.id.btn_tvUpdate);
+        this.checkFavorites = findViewById(R.id.check_TVFavorite);
+
+        //initialize the Lists
+        this.tvList = new ArrayList<>() ;
+        this.seasonList = new ArrayList<>() ;
+
+        //set onclick(s)
+        btn_tvUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDb.updateData(tvShow.getId(),radiotext);
+                txt_TVStatus.setText(radiotext);
+            }
+        });
+    }
+
+
     public class GetTv extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... strings) {
-            Intent i = getIntent();
+
             String current = "";
-            lookTv = "https://api.themoviedb.org/3/tv/"+ i.getStringExtra("id")+"?api_key="+BuildConfig.TMDB_API;
+            lookTv = "https://api.themoviedb.org/3/tv/"+tvShow.getId()+"?api_key="+BuildConfig.TMDB_API;
             Log.d("looktv",lookTv);
+            String popularMovie = "https://api.themoviedb.org/3/movie/popular?api_key="+ BuildConfig.TMDB_API;
             try{
                 URL url;
                 HttpURLConnection urlConnection = null;
@@ -173,7 +199,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                     TvClass model = new TvClass();
-                    seasonClass seasonList = new seasonClass();
+                    SeasonClass seasonList = new SeasonClass();
                     model.setImg(jsonObject1.getString("poster_path"));
                     model.setId(jsonObject1.getString("id"));
                     model.setName(jsonObject1.getString("original_title"));
@@ -196,29 +222,18 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
                 e.printStackTrace();
             }
             Log.d("logdafter","helloafter");
-            dataInTv(tvList);
             seasonRecyclerView(seasonList);
         }
     }
 
 
     // This function gets the TV data and displays it, if the status is empty it is automatically Not Watching
-    private void dataInTv(List<TvClass> tvList){
-
-
+    private void displayTV(){
         Intent i = getIntent();
 
-        tv_TVViewTitle = findViewById(R.id.tv_TVViewTitle);
-        tv_TVLanguage = findViewById(R.id.tv_TVLanguage);
-        tv_TVOverview = findViewById(R.id.tv_TVOverview);
-        txt_TVStatus = findViewById(R.id.txt_TVStatus);
-        tv_TVPoster = findViewById(R.id.tv_TVPoster);
-
-
-        tv_TVViewTitle.setText(i.getStringExtra("name"));
-        tv_TVLanguage.setText(i.getStringExtra("original_language"));
-        tv_TVOverview.setText(i.getStringExtra("overview"));
-
+        tv_TVViewTitle.setText(tvShow.getName());
+        tv_TVLanguage.setText(tvShow.getLanguage());
+        tv_TVOverview.setText(tvShow.getOverview());
 
         Picasso.get().load("https://image.tmdb.org/t/p/w500"+i.getStringExtra("poster_path")).into(tv_TVPoster);
 
@@ -230,9 +245,9 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
 
 
     //This function loads the seasons of the specified television series
-    private void seasonRecyclerView(List<seasonClass> seasonList){
+    private void seasonRecyclerView(List<SeasonClass> seasonList){
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        this.seasonAdapter = new seasonAdapter(this, seasonList);
+        this.seasonAdapter = new SeasonAdapter(this, seasonList);
         this.seasonRecycler = findViewById(R.id.recycle_TVSeasons) ;
         seasonRecycler.setLayoutManager(layoutManager);
         seasonRecycler.setAdapter(seasonAdapter);
