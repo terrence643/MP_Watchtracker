@@ -47,6 +47,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
 
     private DataBaseHelper myDb = new DataBaseHelper(this);
     private Button btn_movieUpdate;
+    private Button btn_movieAdd;
     private RadioButton radioButton;
     private TextView tv_MovieViewTitle;
     private List<MovieClass> movieList;
@@ -76,18 +77,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         GetDataMovie getDataMovie = new GetDataMovie();
         getDataMovie.execute();
 
-//        btn_movieAdd.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//        if (myDb.insertData(i.getStringExtra("id"),radiotext)){
-//            Toast toast = Toast.makeText(getApplicationContext(),"Cannot Add",Toast.LENGTH_LONG);
-//        }
-//        else {
-//              myDb.insertData(i.getStringExtra("id"),radiotext);
-//              tv_status.setText(radiotext);
-//        }
-//            }
-//        });
+
 
     }
 
@@ -117,6 +107,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         this.ImageView = findViewById(R.id.img_MoviePoster);
         this.radioGroup = findViewById(R.id.rg_group) ;
         this.btn_movieUpdate = findViewById(R.id.btn_movieUpdate);
+        this.btn_movieAdd = findViewById(R.id.btn_movieAdd);
         this.checkFavorites = findViewById(R.id.check_favorite) ;
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -128,11 +119,29 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
+        btn_movieAdd.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (myDb.insertData(movie.getId(),radiotext)){
+                    Toast toast = Toast.makeText(getApplicationContext(),"Cannot Add",Toast.LENGTH_LONG);
+                }
+                else {
+                    myDb.insertData(movie.getId(),radiotext);
+                    tv_status.setText(radiotext);
+                }
+            }
+        });
+
         btn_movieUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                myDb.updateData(movie.getId(),radiotext);
+                if (radiotext.equalsIgnoreCase("not watching")){
+                    myDb.deleteData(intent.getStringExtra("id"));
+                }
+                else {
+                    myDb.updateData(movie.getId(), radiotext);
+                }
                 tv_status.setText(radiotext);
             }
         });

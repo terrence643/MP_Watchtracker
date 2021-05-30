@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         myDb = new DataBaseHelper(this);
 
+        myDb.getAllData();
 
         buildHeader();
 
