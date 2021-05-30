@@ -32,8 +32,8 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
     private static String popularTv = "https://api.themoviedb.org/3/tv/popular?api_key="+ BuildConfig.TMDB_API;
     private static String searchMovie = "https://api.themoviedb.org/3/search/movie?api_key="+BuildConfig.TMDB_API+"&query=";
     private static String searchTv = "https://api.themoviedb.org/3/search/tv?api_key="+BuildConfig.TMDB_API+"&query=";
-    private List<MovieClass> movieList;
-    private List<TvClass> tvList;
+    private List<TMDBClass> movieList;
+    private List<TMDBClass> tvList;
     private RecyclerView recycler_Movie;
     private RecyclerView recycler_Tv;
     private com.mobdeve.cait.mp.TvAdapter TvAdapter;
@@ -45,8 +45,8 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
     private ImageButton btn_dTv ;
     private Intent intent ;
 
-    private MovieClass movie ;
-    private TvClass tvShow ;
+    private TMDBClass movie ;
+    private TMDBClass tvShow ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,13 +159,14 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-                    MovieClass model = new MovieClass();
+                    TMDBClass model = new TMDBClass();
                     model.setImg(jsonObject1.getString("poster_path"));
                     Log.d("poster",jsonObject1.getString("poster_path"));
                     model.setId(jsonObject1.getString("id"));
                     model.setName(jsonObject1.getString("original_title"));
                     model.setOverview(jsonObject1.getString("overview"));
                     model.setLanguage(jsonObject1.getString("original_language"));
+                    model.setAirdate(jsonObject1.getString("release_date"));
 
                     movieList.add(model);
 
@@ -231,7 +232,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-                    TvClass model = new TvClass();
+                    TMDBClass model = new TMDBClass();
                     model.setImg(jsonObject1.getString("poster_path"));
                     model.setId(jsonObject1.getString("id"));
                     model.setName(jsonObject1.getString("name"));
@@ -249,7 +250,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
     }
 
     //put movie data inside recycler
-    private void dataInRecyclerMovie(List<MovieClass> movieList){
+    private void dataInRecyclerMovie(List<TMDBClass> movieList){
         //MOVIES
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         this.movieAdapter = new MovieAdapter(this, movieList);
@@ -275,7 +276,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
     }
 
     //put tvshow data in recycler
-    private void dataInRecyclerTv(List<TvClass> tvList){
+    private void dataInRecyclerTv(List<TMDBClass> tvList){
         //TV list
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         this.TvAdapter = new TvAdapter(this, tvList);
@@ -299,17 +300,18 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
     //create movie object
     public void createMovie(int position){
-        movie = new MovieClass() ;
+        movie = new TMDBClass() ;
         movie.setId(movieList.get(position).getId());
         movie.setName(movieList.get(position).getName());
         movie.setImg(movieList.get(position).getImg());
         movie.setOverview(movieList.get(position).getOverview());
         movie.setLanguage(movieList.get(position).getLanguage());
+        movie.setAirdate(movieList.get(position).getAirdate());
     }
 
     //create tv object
     public  void createTV(int position){
-        tvShow = new TvClass() ;
+        tvShow = new TMDBClass() ;
         tvShow.setId(tvList.get(position).getId());
         tvShow.setName(tvList.get(position).getName());
         tvShow.setImg(tvList.get(position).getImg());

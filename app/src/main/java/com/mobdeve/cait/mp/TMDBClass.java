@@ -3,9 +3,7 @@ package com.mobdeve.cait.mp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
-public class TvClass implements Parcelable {
+public class TMDBClass implements Parcelable {
 
     String id;
     String name;
@@ -14,7 +12,7 @@ public class TvClass implements Parcelable {
     String overview;
     String airdate ;
 
-    protected TvClass(Parcel in) {
+    protected TMDBClass(Parcel in) {
         id = in.readString();
         name = in.readString();
         img = in.readString();
@@ -24,15 +22,15 @@ public class TvClass implements Parcelable {
 
     }
 
-    public static final Creator<TvClass> CREATOR = new Creator<TvClass>() {
+    public static final Creator<TMDBClass> CREATOR = new Creator<TMDBClass>() {
         @Override
-        public TvClass createFromParcel(Parcel in) {
-            return new TvClass(in);
+        public TMDBClass createFromParcel(Parcel in) {
+            return new TMDBClass(in);
         }
 
         @Override
-        public TvClass[] newArray(int size) {
-            return new TvClass[size];
+        public TMDBClass[] newArray(int size) {
+            return new TMDBClass[size];
         }
     };
 
@@ -84,7 +82,7 @@ public class TvClass implements Parcelable {
         this.airdate = airdate;
     }
 
-    public TvClass(String id, String name, String img, String language, String overview, String airdate) {
+    public TMDBClass(String id, String name, String img, String language, String overview, String airdate) {
         this.id = id;
         this.name = name;
         this.img = img;
@@ -93,7 +91,7 @@ public class TvClass implements Parcelable {
         this.airdate = airdate ;
     }
 
-    public TvClass() {
+    public TMDBClass() {
     }
 
     @Override

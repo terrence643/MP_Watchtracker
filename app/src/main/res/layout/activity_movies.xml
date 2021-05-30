@@ -46,6 +46,15 @@
             android:layout_width="match_parent"
             android:layout_height="185dp"
             android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/helveticabold"
+            android:text="TextView"
+            android:textSize="18sp" />
     </LinearLayout>
 
 

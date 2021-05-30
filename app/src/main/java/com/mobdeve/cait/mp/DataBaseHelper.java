@@ -14,6 +14,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "ListData_Table";
     public static final String MOVIEID = "MOVIEID";
     public static final String STATUS = "STATUS";
+    public static final String MEDIATYPE = "MEDIATYPE" ;
 
 
 
@@ -31,7 +32,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE "+TABLE_NAME+" (MOVIEID VARCHAR(255) PRIMARY KEY , STATUS VARCHAR(255)) ");
+        db.execSQL("CREATE TABLE "+TABLE_NAME+" (MOVIEID VARCHAR(255) PRIMARY KEY , STATUS VARCHAR(255), MEDIATYPE VARCHAR(255))");
     }
 
     @Override
@@ -40,11 +41,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String MovieId, String Status){
+    public boolean insertData(String MovieId, String Status, String MediaType){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(MOVIEID,MovieId);
         contentValues.put(STATUS,Status);
+        contentValues.put(MEDIATYPE, MediaType);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         if (result == -1) {
@@ -58,17 +60,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean CheckIsDataAlreadyInDBorNot(String TableName, String MovieId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String Query = "Select * from " + TableName + " WHERE " + MovieId ;
-        Cursor cursor = db.rawQuery(Query, null);
-        if(cursor.getCount() <= 0){
-            cursor.close();
-            return false;
-        }
-        cursor.close();
-        return true;
-    }
+//    public boolean CheckIsDataAlreadyInDBorNot(String TableName, String MovieId) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String Query = "Select * from " + TableName + " WHERE " + MovieId ;
+//        Cursor cursor = db.rawQuery(Query, null);
+//        if(cursor.getCount() <= 0){
+//            cursor.close();
+//            return false;
+//        }
+//        cursor.close();
+//        return true;
+//    }
 
     public boolean CheckStatus(String TableName,String Status){
         SQLiteDatabase db = this.getReadableDatabase();

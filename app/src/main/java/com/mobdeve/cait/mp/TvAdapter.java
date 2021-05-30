@@ -16,7 +16,7 @@ import java.util.List;
 public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewHolder> {
 
     private Context tvContext;
-    private List<TvClass> tvData;
+    private List<TMDBClass> tvData;
     private OnItemClickListener tvListener ;
 
     public interface OnItemClickListener{
@@ -27,7 +27,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.MyViewHolder> {
         tvListener = listener ;
     }
 
-    public TvAdapter(Context tvContext, List<TvClass> tvData) {
+    public TvAdapter(Context tvContext, List<TMDBClass> tvData) {
         this.tvContext = tvContext;
         this.tvData = tvData;
     }

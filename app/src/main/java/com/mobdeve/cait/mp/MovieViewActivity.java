@@ -50,17 +50,17 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
     private Button btn_movieAdd;
     private RadioButton radioButton;
     private TextView tv_MovieViewTitle;
-    private List<MovieClass> movieList;
+    private List<TMDBClass> movieList;
     private ImageView ImageView;
     private TextView tv_Language;
     private TextView tv_Overview;
     private TextView tv_status;
+    private TextView tv_Airdate ;
     private RadioGroup radioGroup ;
-    private CheckBox checkFavorites;
     private String radiotext;
     private RecyclerView recycler_Recommend ;
     private MovieAdapter movieAdapter ;
-    private MovieClass movie ;
+    private TMDBClass movie ;
 
     private String movieID ;
     @Override
@@ -106,6 +106,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         this.tv_Language = findViewById(R.id.tv_Language);
         this.tv_Overview = findViewById(R.id.tv_Overview);
         this.tv_status = findViewById(R.id.tv_status);
+        this.tv_Airdate = findViewById(R.id.tv_Airdate) ;
         this.ImageView = findViewById(R.id.img_MoviePoster);
         this.radioGroup = findViewById(R.id.rg_group) ;
         this.btn_movieUpdate = findViewById(R.id.btn_movieUpdate);
@@ -124,7 +125,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         btn_movieAdd.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                myDb.insertData(movieID,radiotext);
+                myDb.insertData(movieID,radiotext, "Movie");
                 tv_status.setText(radiotext);
                 Toast toast = Toast.makeText(getApplicationContext(),"Added",Toast.LENGTH_LONG);
                 toast.show();
@@ -216,12 +217,13 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
 
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-                    MovieClass model = new MovieClass();
+                    TMDBClass model = new TMDBClass();
                     model.setImg(jsonObject1.getString("poster_path"));
                     model.setId(jsonObject1.getString("id"));
                     model.setName(jsonObject1.getString("original_title"));
                     model.setOverview(jsonObject1.getString("overview"));
                     model.setLanguage(jsonObject1.getString("original_language"));
+                    model.setAirdate(jsonObject1.getString("release_date"));
                     movieList.add(model);
 
                 }
@@ -234,7 +236,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
 
 
     //populate the recyclerview for recommended
-    private void dataInMovie(List<MovieClass> movieList){
+    private void dataInMovie(List<TMDBClass> movieList){
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         movieAdapter = new MovieAdapter(MovieViewActivity.this, movieList);
         this.recycler_Recommend = findViewById(R.id.recycle_Recommend) ;
@@ -268,6 +270,8 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         tv_MovieViewTitle.setText(movie.getName());
         tv_Language.setText(movie.getLanguage());
         tv_Overview.setText(movie.getOverview());
+        tv_Airdate.setText(movie.getAirdate());
+
 
         Picasso.get().load("https://image.tmdb.org/t/p/w500"+i.getStringExtra("poster_path")).into(ImageView);
 
@@ -279,11 +283,12 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
 
     //create a movie object
     public void createMovie(int position){
-        movie = new MovieClass() ;
+        movie = new TMDBClass() ;
         movie.setId(movieList.get(position).getId());
         movie.setName(movieList.get(position).getName());
         movie.setImg(movieList.get(position).getImg());
         movie.setOverview(movieList.get(position).getOverview());
         movie.setLanguage(movieList.get(position).getLanguage());
+        movie.setAirdate(movieList.get(position).getAirdate());
     }
 }

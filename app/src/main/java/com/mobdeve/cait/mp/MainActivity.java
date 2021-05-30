@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -42,6 +44,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView tabDiscover ;
     private Intent intent ;
 
+    private RecyclerView recycleCurrent ;
+    private RecyclerView recycleTowatch ;
+    private RecyclerView recyclerFinish ;
+    private TvAdapter univAdapter ;
+
     private DataBaseHelper myDb;
 
     @Override
@@ -51,11 +58,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         myDb = new DataBaseHelper(this);
 
-        myDb.getAllData();
+//        myDb.getAllData();
         Log.d("DATA", "onCreate: " + myDb.getAllData());
         buildHeader();
 
     }
+
+//    public void getAllData(){
+//        Cursor cursor = myDb.getAllData() ;
+//        if(cursor.getCount() == 0){
+//            Toast.makeText(getBaseContext(), "No data available!", Toast.LENGTH_SHORT).show();
+//        } else {
+//            while(cursor.moveToNext()){
+//                idList.add(cursor.getString(0));    // getting id list from db
+//            }
+//        }
+//    }
+
 
     public void buildHeader(){
         this.tabHome = findViewById(R.id.img_tabHome) ;
@@ -81,6 +100,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break ;
         }
-
     }
 }

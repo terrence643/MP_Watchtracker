@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,11 +53,11 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
     private TextView txt_TVStatus;
     private TextView tv_TVAirdate ;
     private RadioGroup radioGroup ;
-    private CheckBox checkFavorites;
+    private Button btn_tvAdd ;
     private String radiotext;
 
-    private List<TvClass> tvList;
-    private TvClass tvShow ;
+    private List<TMDBClass> tvList;
+    private TMDBClass tvShow ;
 
     private static final String TAG ="TVView//" ;
     @Override
@@ -103,50 +103,43 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         this.tv_TVAirdate = findViewById(R.id.tv_TVAirdate) ;
         this.radioGroup = findViewById(R.id.rg_TVgroup) ;
         this.btn_tvUpdate = findViewById(R.id.btn_tvUpdate);
-
+        this.btn_tvAdd = findViewById(R.id.btn_tvAdd) ;
 
         //initialize the Lists
         this.tvList = new ArrayList<>() ;
 
+
 //        set onclick(s)
-//                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//                    @Override
-//                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                        radioButton = (RadioButton) findViewById(checkedId);
-//                        radiotext = radioButton.getText().toString();
-//                    }
-//                });
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                radioButton = (RadioButton) findViewById(checkedId);
+                radiotext = radioButton.getText().toString();
+            }
+        });
 //
-//
-//
-//
-//
-//                btn_tvAdd.setOnClickListener(new View.OnClickListener(){
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                if (myDb.insertData(i.getStringExtra("id"),radiotext)){
-//                    Toast toast = Toast.makeText(getApplicationContext(),"Cannot Add",Toast.LENGTH_LONG);
-//                }
-//                else {
-//                      myDb.insertData(i.getStringExtra("id"),radiotext);
-//                      txt_TVStatus.setText(radiotext);
-//                }
-//
-//                    }
-//                });
-//        btn_tvUpdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (radiotext.equalsIgnoreCase("not watching")){
-//                    myDb.deleteData(intent.getStringExtra("id"));
-//                }
-//                else{
-//                myDb.updateData(tvShow.getId(),radiotext);
-//                }
-//                txt_TVStatus.setText(radiotext);
-//            }
-//        });
+
+        btn_tvAdd.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                myDb.insertData(tvShow.getId(),radiotext, "TV");
+                txt_TVStatus.setText(radiotext);
+                Toast toast = Toast.makeText(getApplicationContext(),"Added",Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
+        btn_tvUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (radiotext.equalsIgnoreCase("not watching")){
+                    myDb.deleteData(intent.getStringExtra("id"));
+                }
+                else{
+                myDb.updateData(tvShow.getId(),radiotext);
+                }
+                txt_TVStatus.setText(radiotext);
+            }
+        });
     }
 
 
@@ -205,7 +198,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
 
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-                    TvClass model = new TvClass();
+                    TMDBClass model = new TMDBClass();
                     model.setImg(jsonObject1.getString("poster_path"));
                     model.setId(jsonObject1.getString("id"));
                     model.setName(jsonObject1.getString("name"));
@@ -243,7 +236,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
 
 
     //This function loads the seasons of the specified television series
-    private void dataInRecyclerTv(List<TvClass> tvList){
+    private void dataInRecyclerTv(List<TMDBClass> tvList){
         //TV list
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         TvAdapter = new TvAdapter(TvViewActivity.this, tvList);
@@ -269,7 +262,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
     }
     //create tv object
     public  void createTV(int position){
-        tvShow = new TvClass() ;
+        tvShow = new TMDBClass() ;
         tvShow.setId(tvList.get(position).getId());
         tvShow.setName(tvList.get(position).getName());
         tvShow.setImg(tvList.get(position).getImg());

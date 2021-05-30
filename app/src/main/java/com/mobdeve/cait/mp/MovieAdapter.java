@@ -16,7 +16,7 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
 
     private Context movieContext;
-    private List<MovieClass> movieData;
+    private List<TMDBClass> movieData;
     private OnItemClickListener movieListener ;
 
     public interface OnItemClickListener{
@@ -27,7 +27,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         movieListener = listener ;
     }
 
-    public MovieAdapter(Context movieContext, List<MovieClass> movieData) {
+    public MovieAdapter(Context movieContext, List<TMDBClass> movieData) {
         this.movieContext = movieContext;
         this.movieData = movieData;
     }
