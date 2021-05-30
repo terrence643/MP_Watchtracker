@@ -84,6 +84,31 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+
+    public Cursor getWatchingData(String TableName, String Status){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String Query = "SELECT * FROM" +TableName+ "WHERE " +Status+ " LIKE '%" +Status+ "%'";
+
+        Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
+        return res;
+    }
+
+    public Cursor getFinishedData(String TableName, String Status){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String Query = "SELECT * FROM" +TableName+ "WHERE " +Status+ " LIKE '%" +Status+ "%'";
+
+        Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
+        return res;
+    }
+
+    public Cursor getToWatchData(String TableName, String Status){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String Query = "SELECT * FROM" +TableName+ "WHERE " +Status+ " LIKE '%" +Status+ "%'";
+
+        Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
+        return res;
+    }
+
     public boolean updateData(String movieID, String status){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
