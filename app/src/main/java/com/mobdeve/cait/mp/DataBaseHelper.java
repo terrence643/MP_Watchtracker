@@ -46,17 +46,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(MOVIEID,MovieId);
         contentValues.put(STATUS,Status);
 
-        if(!CheckIsDataAlreadyInDBorNot(TABLE_NAME,MovieId)) {
-            long result = db.insert(TABLE_NAME, null, contentValues);
-            if (result == -1) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        else{
+        long result = db.insert(TABLE_NAME, null, contentValues);
+        if (result == -1) {
             return false;
         }
+        else{
+            return true;
+        }
+
+
     }
 
 

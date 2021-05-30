@@ -124,16 +124,11 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         btn_movieAdd.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if (myDb.insertData(movieID,radiotext)){
-                    Toast toast = Toast.makeText(getApplicationContext(),"Cannot Add",Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else {
-                    myDb.insertData(movieID,radiotext);
-                    tv_status.setText(radiotext);
-                    Toast toast = Toast.makeText(getApplicationContext(),"Added",Toast.LENGTH_LONG);
-                    toast.show();
-                }
+                myDb.insertData(movieID,radiotext);
+                tv_status.setText(radiotext);
+                Toast toast = Toast.makeText(getApplicationContext(),"Added",Toast.LENGTH_LONG);
+                toast.show();
+
             }
         });
 
