@@ -45,20 +45,23 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
     private Button btn_tvUpdate;
     private RadioButton radioButton;
     private TextView tv_TVViewTitle;
-    private RecyclerView seasonRecycler;
-    private SeasonAdapter seasonAdapter;
+    private RecyclerView recycler_TVRecs;
+    private TvAdapter TvAdapter ;
     private ImageView tv_TVPoster;
     private TextView tv_TVLanguage;
     private TextView tv_TVOverview;
     private TextView txt_TVStatus;
+    private TextView txt_TVSeasons ;
+    private TextView txt_TVEpisodes ;
     private RadioGroup radioGroup ;
     private CheckBox checkFavorites;
     private String radiotext;
 
     private List<TvClass> tvList;
-    private List<SeasonClass> seasonList;
+    private List<SeasonClass> seasonLists;
     private TvClass tvShow ;
 
+    private static final String TAG ="TVView//" ;
     @Override
     protected void onCreate(Bundle savedInstancedState) {
         super.onCreate(savedInstancedState);
@@ -66,6 +69,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
 
         Intent i = getIntent();
         tvShow = i.getParcelableExtra("tvParcel") ;
+        Log.d(TAG, "onCreate: id " + tvShow.getId());
         buildHeader();
         buildViews();
         displayTV();
@@ -85,7 +89,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         this.tabDiscover = findViewById(R.id.img_tabDiscover) ;
         this.tabName = findViewById(R.id.txt_tabname) ;
 
-        tabName.setText("HOME");
+        tabName.setText("TV Show Details");
 
         tabHome.setOnClickListener(this);
         tabDiscover.setOnClickListener(this);
@@ -98,13 +102,15 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         this.tv_TVOverview = findViewById(R.id.tv_TVOverview);
         this.txt_TVStatus = findViewById(R.id.txt_TVStatus);
         this.tv_TVPoster = findViewById(R.id.tv_TVPoster);
+        this.txt_TVSeasons = findViewById(R.id.tv_TVSeasons) ;
+        this.txt_TVEpisodes = findViewById(R.id.tv_TVEpisodes) ;
         this.radioGroup = findViewById(R.id.rg_TVgroup) ;
         this.btn_tvUpdate = findViewById(R.id.btn_tvUpdate);
-        this.checkFavorites = findViewById(R.id.check_TVFavorite);
+
 
         //initialize the Lists
         this.tvList = new ArrayList<>() ;
-        this.seasonList = new ArrayList<>() ;
+        this.seasonLists = new ArrayList<>() ;
 
 //        set onclick(s)
 //                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -154,15 +160,17 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         protected String doInBackground(String... strings) {
 
             String current = "";
-            lookTv = "https://api.themoviedb.org/3/tv/"+tvShow.getId()+"?api_key="+BuildConfig.TMDB_API;
-            Log.d("looktv",lookTv);
-            String popularMovie = "https://api.themoviedb.org/3/movie/popular?api_key="+ BuildConfig.TMDB_API;
+            String recommendTv =  "https://api.themoviedb.org/3/tv/"+tvShow.getId()+"/recommendations?api_key="+BuildConfig.TMDB_API;
+            String similarTV = "https://api.themoviedb.org/3/tv/"+tvShow.getId()+"/similar?api_key="+BuildConfig.TMDB_API ;
+            String popularTv = "https://api.themoviedb.org/3/tv/popular?api_key="+ BuildConfig.TMDB_API;
+            Log.d(TAG, "doInBackground: recommendtv url = " + recommendTv);
+            Log.d(TAG, "doInBackground: GUMANA");
             try{
                 URL url;
                 HttpURLConnection urlConnection = null;
 
                 try{
-                    url = new URL(lookTv);
+                    url = new URL(similarTV);
                     urlConnection = (HttpURLConnection) url.openConnection();
 
                     InputStream inputStream = urlConnection.getInputStream();
@@ -194,41 +202,29 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
 
         @Override
         protected void onPostExecute(String s) {
-            Log.d("logdbeforetry",s);
             try{
                 JSONObject jsonObject = new JSONObject(s);
+                JSONArray jsonArray =  jsonObject.getJSONArray("results");
 
-                JSONArray jsonArray =  jsonObject.getJSONArray("seasons");
-                Log.d("logd", jsonArray.toString());
                 for(int i = 0; i < jsonArray.length() ; i++){
 
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                     TvClass model = new TvClass();
-                    SeasonClass seasonList = new SeasonClass();
                     model.setImg(jsonObject1.getString("poster_path"));
                     model.setId(jsonObject1.getString("id"));
-                    model.setName(jsonObject1.getString("original_title"));
+                    model.setName(jsonObject1.getString("name"));
+                    model.setLanguage(jsonObject1.getString("original_language"));
+                    model.setOverview(jsonObject1.getString("overview"));
+                    model.setEpisodes(jsonObject1.getString("number_of_episodes"));
+                    model.setSeasons(jsonObject1.getString("number_of_seasons"));
                     tvList.add(model);
 
-                    seasonList.setSeason_number(jsonObject1.getInt("season_number"));
-                    seasonList.setPoster_path(jsonObject1.getString("poster_path"));
-                    seasonList.setOverview(jsonObject1.getString("overview"));
-                    seasonList.setAir_date(jsonObject1.getString("air_date"));
-                    seasonList.setEpisode_count(jsonObject1.getInt("episode_count"));
-                    seasonList.setId(jsonObject1.getInt("id"));
-                    seasonList.setName(jsonObject1.getString("name"));
-
-                    Log.d("tvlisthere",tvList.toString());
                 }
-
-
             } catch (JSONException e) {
-                Log.d("logdcatch",e.toString());
                 e.printStackTrace();
             }
-            Log.d("logdafter","helloafter");
-            seasonRecyclerView(seasonList);
+            dataInRecyclerTv(tvList);
         }
     }
 
@@ -240,6 +236,8 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         tv_TVViewTitle.setText(tvShow.getName());
         tv_TVLanguage.setText(tvShow.getLanguage());
         tv_TVOverview.setText(tvShow.getOverview());
+        txt_TVSeasons.setText(tvShow.getSeasons());
+        txt_TVEpisodes.setText(tvShow.getEpisodes());
 
         Picasso.get().load("https://image.tmdb.org/t/p/w500"+i.getStringExtra("poster_path")).into(tv_TVPoster);
 
@@ -251,12 +249,40 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
 
 
     //This function loads the seasons of the specified television series
-    private void seasonRecyclerView(List<SeasonClass> seasonList){
+    private void dataInRecyclerTv(List<TvClass> tvList){
+        //TV list
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        this.seasonAdapter = new SeasonAdapter(this, seasonList);
-        this.seasonRecycler = findViewById(R.id.recycle_TVSeasons) ;
-        seasonRecycler.setLayoutManager(layoutManager);
-        seasonRecycler.setAdapter(seasonAdapter);
+        TvAdapter = new TvAdapter(TvViewActivity.this, tvList);
+        this.recycler_TVRecs = findViewById(R.id.recycle_TVRecs) ;
+        recycler_TVRecs.setLayoutManager(layoutManager);
+        recycler_TVRecs.setAdapter(TvAdapter);
+
+        Log.d(TAG, "dataInRecyclerTv: NA CREATE RECYCLE");
+//        Log.d(TAG, "dataInRecyclerTv: TVSHOW 0 ID = " + tvList.get(0).getId() );
+
+
+        TvAdapter.setOnItemClickListener(new com.mobdeve.cait.mp.TvAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent i2 = new Intent(getBaseContext(),TvViewActivity.class);
+                createTV(position);
+                i2.putExtra("tvParcel", tvShow) ;
+                i2.putExtra("poster_path",tvList.get(position).getImg());
+                startActivity(i2);
+                Log.d("TVCLICK", "onItemClick: " + position);
+            }
+        });
+    }
+    //create tv object
+    public  void createTV(int position){
+        tvShow = new TvClass() ;
+        tvShow.setId(tvList.get(position).getId());
+        tvShow.setName(tvList.get(position).getName());
+        tvShow.setImg(tvList.get(position).getImg());
+        tvShow.setOverview(tvList.get(position).getOverview());
+        tvShow.setLanguage(tvList.get(position).getLanguage());
+        tvShow.setEpisodes(tvList.get(position).getEpisodes());
+        tvShow.setSeasons(tvList.get(position).getSeasons());
     }
 
     // This function allows for the swapping between main activity and discover activity

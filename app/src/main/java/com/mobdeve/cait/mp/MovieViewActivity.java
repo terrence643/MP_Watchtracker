@@ -108,7 +108,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         this.radioGroup = findViewById(R.id.rg_group) ;
         this.btn_movieUpdate = findViewById(R.id.btn_movieUpdate);
         this.btn_movieAdd = findViewById(R.id.btn_movieAdd);
-        this.checkFavorites = findViewById(R.id.check_favorite) ;
+
 
 //        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 //            @Override
@@ -218,7 +218,6 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
 
                     MovieClass model = new MovieClass();
                     model.setImg(jsonObject1.getString("poster_path"));
-                    Log.d("poster",jsonObject1.getString("poster_path"));
                     model.setId(jsonObject1.getString("id"));
                     model.setName(jsonObject1.getString("original_title"));
                     model.setOverview(jsonObject1.getString("overview"));

@@ -18,8 +18,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:isScrollContainer="false">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/img_MoviePoster"
@@ -184,12 +183,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/helveticabold"
                 android:text="Watching status"
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toEndOf="@+id/img_MoviePoster"
-                app:layout_constraintTop_toBottomOf="@+id/check_favorite" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_MovieViewTitle" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -208,19 +207,10 @@
                 android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-            <CheckBox
-                android:id="@+id/check_favorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="10dp"
-                android:text="Add to favorites"
-                app:layout_constraintStart_toEndOf="@+id/img_MoviePoster"
-                app:layout_constraintTop_toBottomOf="@+id/tv_MovieViewTitle" />
 
             <Button
                 android:id="@+id/btn_movieAdd"

@@ -12,211 +12,271 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/tv_TVPoster"
-            android:layout_width="139dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_TVViewTitle"
-            android:layout_width="200dp"
-            android:layout_height="22dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="TITLE"
-            android:textColor="#1CE783"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/tv_TVPoster"
+                android:layout_width="139dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/helvetica"
-            android:text="Status : "
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_TVPoster" />
+            <TextView
+                android:id="@+id/tv_TVViewTitle"
+                android:layout_width="200dp"
+                android:layout_height="22dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="TITLE"
+                android:textColor="#1CE783"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/helveticalight"
-            android:textColor="#FFFFFF"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toBottomOf="@+id/tv_TVPoster" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/helvetica"
-            android:text="Language : "
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/helvetica"
-            android:text="Overview"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-        <TextView
-            android:id="@+id/tv_TVOverview"
-            android:layout_width="381dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/helveticalight"
-            android:text="TextView"
-            android:textAlignment="textStart"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-        <TextView
-            android:id="@+id/tv_TVLanguage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/helveticalight"
-            android:text="TextView"
-            android:textColor="#FFFFFF"
-            app:layout_constraintStart_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/txt_TVStatus" />
-
-        <RadioGroup
-            android:id="@+id/rg_TVgroup"
-            android:layout_width="146dp"
-            android:layout_height="94dp"
-            android:layout_marginStart="31dp"
-            app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
-            app:layout_constraintTop_toBottomOf="@+id/textView3">
-
-            <RadioButton
-                android:id="@+id/radio_TVNot"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:checked="true"
-                android:fontFamily="@font/helvetica"
-                android:text="Not watching"
-                android:textSize="12sp" />
-
-            <RadioButton
-                android:id="@+id/radio_TVToWatch"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:text="To watch"
-                android:textSize="12sp" />
-
-            <RadioButton
-                android:id="@+id/radio_TVCurrent"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Currently watching"
-                android:textSize="12sp" />
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/helvetica"
+                android:text="Status : "
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_TVPoster" />
 
-            <RadioButton
-                android:id="@+id/radio_TVFinished"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:text="Finished watching"
-                android:textSize="12sp" />
-        </RadioGroup>
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/helveticalight"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toEndOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/tv_TVPoster" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/helveticabold"
-            android:text="Watching status"
-            android:textColor="#FFFFFF"
-            app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
-            app:layout_constraintTop_toBottomOf="@+id/check_TVFavorite" />
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/helvetica"
+                android:text="Language : "
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/helveticabold"
-            android:text="Seasons"
-            android:textColor="#FFFFFF"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_TVOverview" />
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/helvetica"
+                android:text="Overview"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycle_TVSeasons"
-            android:layout_width="370dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            <TextView
+                android:id="@+id/tv_TVOverview"
+                android:layout_width="381dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/helveticalight"
+                android:text="TextView"
+                android:textAlignment="textStart"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-        <CheckBox
-            android:id="@+id/check_TVFavorite"
-            android:layout_width="111dp"
-            android:layout_height="21dp"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="10dp"
-            android:text="CheckBox"
-            app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
-            app:layout_constraintTop_toBottomOf="@+id/tv_TVViewTitle" />
+            <TextView
+                android:id="@+id/tv_TVLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/helveticalight"
+                android:text="TextView"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toEndOf="@+id/textView9"
+                app:layout_constraintTop_toBottomOf="@+id/txt_TVStatus" />
 
-        <TextView
-            android:id="@+id/txt_TVStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toBottomOf="@+id/tv_TVPoster" />
+            <RadioGroup
+                android:id="@+id/rg_TVgroup"
+                android:layout_width="146dp"
+                android:layout_height="94dp"
+                android:layout_marginStart="31dp"
+                app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
 
-        <Button
-            android:id="@+id/btn_tvUpdate"
-            android:layout_width="108dp"
-            android:layout_height="33dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
-            android:text="Update"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
-            app:layout_constraintTop_toBottomOf="@+id/rg_TVgroup" />
+                <RadioButton
+                    android:id="@+id/radio_TVNot"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:checked="true"
+                    android:fontFamily="@font/helvetica"
+                    android:text="Not watching"
+                    android:textSize="12sp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <RadioButton
+                    android:id="@+id/radio_TVToWatch"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="To watch"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_TVCurrent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Currently watching"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/radio_TVFinished"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="Finished watching"
+                    android:textSize="12sp" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="31dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/helveticabold"
+                android:text="Watching status"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
+                app:layout_constraintTop_toBottomOf="@+id/tv_TVViewTitle" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/helveticabold"
+                android:text="Recommended"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_TVOverview" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_TVRecs"
+                android:layout_width="370dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="26dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/txt_TVStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/helveticalight"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toEndOf="@+id/textView7"
+                app:layout_constraintTop_toBottomOf="@+id/tv_TVPoster" />
+
+            <Button
+                android:id="@+id/btn_tvUpdate"
+                android:layout_width="108dp"
+                android:layout_height="33dp"
+                android:text="Update"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/button2"
+                app:layout_constraintTop_toBottomOf="@+id/rg_TVgroup" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="68dp"
+                android:layout_height="33dp"
+                android:layout_marginStart="30dp"
+                android:text="ADD"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/tv_TVPoster"
+                app:layout_constraintTop_toBottomOf="@+id/rg_TVgroup" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="96dp"
+                android:layout_marginTop="56dp"
+                android:fontFamily="@font/helvetica"
+                android:text="Seasons:"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/textView9"
+                app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+            <TextView
+                android:id="@+id/tv_TVSeasons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="58dp"
+                android:fontFamily="@font/helveticalight"
+                android:text="TextView"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/btn_tvUpdate" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="112dp"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="@font/helvetica"
+                android:text="Episodes: "
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tv_TVOverview"
+                app:layout_constraintStart_toEndOf="@+id/textView10" />
+
+            <TextView
+                android:id="@+id/tv_TVEpisodes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/helveticalight"
+                android:text="TextView"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/tv_TVSeasons" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </LinearLayout>
