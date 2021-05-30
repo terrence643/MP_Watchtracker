@@ -14,10 +14,10 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class seasonAdapter extends RecyclerView.Adapter<seasonAdapter.MyViewHolder> {
+public class SeasonAdapter extends RecyclerView.Adapter<SeasonAdapter.MyViewHolder> {
 
     private Context seasonContext;
-    private List<seasonClass> seasonData;
+    private List<SeasonClass> seasonData;
     private OnItemClickListener seasonListener ;
 
     public interface OnItemClickListener{
@@ -28,7 +28,7 @@ public class seasonAdapter extends RecyclerView.Adapter<seasonAdapter.MyViewHold
         seasonListener = listener ;
     }
 
-    public seasonAdapter(Context seasonContext, List<seasonClass> seasonData) {
+    public SeasonAdapter(Context seasonContext, List<SeasonClass> seasonData) {
         Log.d("seasonadapter",seasonContext.toString());
         Log.d("seasonadapter",seasonData.toString());
         this.seasonContext = seasonContext;
@@ -41,7 +41,7 @@ public class seasonAdapter extends RecyclerView.Adapter<seasonAdapter.MyViewHold
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d("parent",parent.toString());
         Log.d("view",Integer.toString(viewType));
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.season_layout, parent, false) ;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.icon_img_layout, parent, false) ;
         MyViewHolder myViewHolder = new MyViewHolder(view, seasonListener) ;
         return myViewHolder ;
     }
@@ -65,7 +65,7 @@ public class seasonAdapter extends RecyclerView.Adapter<seasonAdapter.MyViewHold
 
         public MyViewHolder(@NonNull View itemView, OnItemClickListener listener){
             super(itemView);
-            seasonPoster = itemView.findViewById(R.id.seasonPoster);
+            seasonPoster = itemView.findViewById(R.id.iconPoster);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

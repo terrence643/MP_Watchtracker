@@ -3,6 +3,8 @@ package com.mobdeve.cait.mp;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class TvClass implements Parcelable {
 
     String id;
@@ -10,7 +12,7 @@ public class TvClass implements Parcelable {
     String img;
     String language;
     String overview;
-
+    ArrayList<SeasonClass> seasonClassArrayList;
 
     protected TvClass(Parcel in) {
         id = in.readString();
@@ -18,6 +20,7 @@ public class TvClass implements Parcelable {
         img = in.readString();
         language = in.readString();
         overview = in.readString();
+        seasonClassArrayList = in.createTypedArrayList(SeasonClass.CREATOR) ;
     }
 
     public static final Creator<TvClass> CREATOR = new Creator<TvClass>() {
@@ -78,6 +81,7 @@ public class TvClass implements Parcelable {
         this.img = img;
         this.language = language;
         this.overview = overview;
+        this.seasonClassArrayList = new ArrayList<>() ;
     }
 
     public TvClass() {
