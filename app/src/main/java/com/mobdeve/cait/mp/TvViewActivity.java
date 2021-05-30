@@ -57,7 +57,6 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
     private String radiotext;
 
     private List<TvClass> tvList;
-    private List<SeasonClass> seasonLists;
     private TvClass tvShow ;
 
     private static final String TAG ="TVView//" ;
@@ -108,7 +107,6 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
 
         //initialize the Lists
         this.tvList = new ArrayList<>() ;
-        this.seasonLists = new ArrayList<>() ;
 
 //        set onclick(s)
 //                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

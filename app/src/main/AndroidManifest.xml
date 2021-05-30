@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/wt_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.MP">
-        <activity android:name=".MovieViewActivity"></activity>
+        <activity android:name=".MoviesActivity"></activity>
+        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".MovieViewActivity" />
         <activity
             android:name=".DiscoverActivity"
             android:launchMode="singleTask" />
@@ -24,8 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".TvViewActivity">
+        <activity android:name=".TvViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

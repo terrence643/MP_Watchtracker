@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +41,8 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
     private TextView tabName ;
     private ImageView tabHome ;
     private ImageView tabDiscover ;
+    private ImageButton btn_dMovie ;
+    private ImageButton btn_dTv ;
     private Intent intent ;
 
     private MovieClass movie ;
@@ -71,6 +74,13 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
 
         tabHome.setOnClickListener(this);
         tabDiscover.setOnClickListener(this);
+
+        //btn intialize
+        this.btn_dMovie = findViewById(R.id.btn_dMovie) ;
+        this.btn_dTv = findViewById(R.id.btn_dTV) ;
+
+        btn_dMovie.setOnClickListener(this);
+        btn_dTv.setOnClickListener(this);
     }
 
     //header tab onclick
@@ -85,6 +95,13 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
                 intent = new Intent(getBaseContext(), DiscoverActivity.class);
                 startActivity(intent);
                 break ;
+            case R.id.btn_dMovie:
+                intent = new Intent(getBaseContext(), MoviesActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_dTV:
+                Log.d("BUTTON/", "onClick: DTV");
+                break;
         }
     }
 
