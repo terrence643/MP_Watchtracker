@@ -216,8 +216,8 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
                     model.setName(jsonObject1.getString("name"));
                     model.setLanguage(jsonObject1.getString("original_language"));
                     model.setOverview(jsonObject1.getString("overview"));
-                    model.setEpisodes(jsonObject1.getString("number_of_episodes"));
-                    model.setSeasons(jsonObject1.getString("number_of_seasons"));
+//                    model.setEpisodes(jsonObject1.getString("number_of_episodes"));
+//                    model.setSeasons(jsonObject1.getString("number_of_seasons"));
                     tvList.add(model);
 
                 }
