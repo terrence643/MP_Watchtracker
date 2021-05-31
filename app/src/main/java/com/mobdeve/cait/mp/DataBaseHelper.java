@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteTransactionListener;
+import android.util.Log;
 
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -24,11 +25,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor getAllData(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
-        return res;
+    Cursor getAllData(){
+        String retrieve = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        if(db != null){
+            cursor = db.rawQuery(retrieve, null);   // contains all data
+//            Log.d("DBHELPER/", "getAllData: cursor = " + cursor);
+//            Log.d("DBHELPER/", "getAllData: column 0 = " + cursor.getString(1));
+        } return cursor;
     }
+
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -85,21 +94,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getWatchingData(String TableName, String Status){
+    public Cursor getData(String Media){
         SQLiteDatabase db = this.getWritableDatabase();
-        String Query = "SELECT * FROM" +TableName+ "WHERE " +Status+ " LIKE '%" +Status+ "%'";
+        String Query = "SELECT * FROM " + TABLE_NAME + " WHERE " + MEDIATYPE + " LIKE '%" + Media + "%'";
 
-        Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
+        Cursor res = db.rawQuery(Query,null);
         return res;
     }
 
-    public Cursor getFinishedData(String TableName, String Status){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String Query = "SELECT * FROM" +TableName+ "WHERE " +Status+ " LIKE '%" +Status+ "%'";
 
-        Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
-        return res;
-    }
 
     public Cursor getToWatchData(String TableName, String Status){
         SQLiteDatabase db = this.getWritableDatabase();

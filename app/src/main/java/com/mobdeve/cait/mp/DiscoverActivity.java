@@ -254,7 +254,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         //MOVIES
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         this.movieAdapter = new MovieAdapter(this, movieList);
-        this.recycler_Movie = findViewById(R.id.recycler_discMovie) ;
+        this.recycler_Movie = findViewById(R.id.recycler_Finish) ;
         recycler_Movie.setLayoutManager(layoutManager);
         recycler_Movie.setAdapter(movieAdapter);
 

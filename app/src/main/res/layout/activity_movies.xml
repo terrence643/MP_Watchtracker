@@ -25,10 +25,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/helveticabold"
-            android:text="Popular"
+            android:text="Latest"
             android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_Latest"
             android:layout_width="match_parent"
             android:layout_height="185dp"
             android:layout_marginTop="5dp" />
@@ -43,6 +44,7 @@
             android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_TopRated"
             android:layout_width="match_parent"
             android:layout_height="185dp"
             android:layout_marginTop="5dp" />
@@ -53,8 +55,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/helveticabold"
-            android:text="TextView"
+            android:text="Upcoming"
             android:textSize="18sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_Upcoming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" />
     </LinearLayout>
 
 
