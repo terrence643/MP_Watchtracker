@@ -52,6 +52,7 @@ public class MoviesActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private static final String TAG = "ACTIVITYMOVIE" ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,13 +85,14 @@ public class MoviesActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    //initialize lists
     public void initLists(){
         this.latestLists = new ArrayList<>() ;
         this.topLists = new ArrayList<>() ;
         this.upcomingLists = new ArrayList<>() ;
     }
 
-    //get the data to be displayed in the recommended
+    //get the data to be displayed
     public class GetLatestDataMovie extends AsyncTask<String, String, String> {
 
         @Override
@@ -168,7 +170,7 @@ public class MoviesActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    //get the data to be displayed in the recommended
+    //get the data to be displayed
     public class GetTopDataMovie extends AsyncTask<String, String, String> {
 
         @Override
@@ -242,7 +244,7 @@ public class MoviesActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    //get the data to be displayed in the recommended
+    //get the data to be displayed
     public class GetUpcomingDataMovie extends AsyncTask<String, String, String> {
 
         @Override
@@ -391,7 +393,7 @@ public class MoviesActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    //get the data to be displayed in the recommended
+    //get the data to be displayed
     public class GetTopDataTv extends AsyncTask<String, String, String> {
 
         @Override

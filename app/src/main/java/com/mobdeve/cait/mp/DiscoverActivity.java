@@ -252,7 +252,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    //put movie data inside recycler
+    //put movie data inside recycler of movie
     private void dataInRecyclerMovie(List<TMDBClass> movieList){
         //MOVIES
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -279,7 +279,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    //put tvshow data in recycler
+    //put tvshow data in recycler of tv
     private void dataInRecyclerTv(List<TMDBClass> tvList){
         //TV list
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);

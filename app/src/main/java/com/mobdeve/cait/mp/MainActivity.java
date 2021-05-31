@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //get the data for currently watching movie to show in recycler_movie
+    //get the data for currently watching movie to show in recycler_current
     public class GetMovieCurrent extends AsyncTask<String, String, String> {
 
         @Override
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //get the data for to watch movie to show in recycler_movie
+    //get the data for to watch movie to show in recycler_towatch
     public class GetMovieTowatch extends AsyncTask<String, String, String> {
 
         @Override
@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //get the data for finished watching movie to show in recycler_movie
+    //get the data for finished watching movie to show in recycler_finish
     public class GetMovieFinish extends AsyncTask<String, String, String> {
 
         @Override
@@ -361,6 +361,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //get the data for currently watiching tv to show in recycler_current
     public class GetTVCurrent extends AsyncTask<String, String, String> {
 
         @Override
@@ -429,6 +430,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    //get the data for to watch tv to show in recycler_towatch
     public class GetTVTowatch extends AsyncTask<String, String, String> {
 
         @Override
@@ -496,6 +498,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             towatchAdapter.notifyDataSetChanged();
         }
     }
+
+    //get the data for finished watching tv to show in recycler_finish
     public class GetTVFinish extends AsyncTask<String, String, String> {
 
         @Override
@@ -680,6 +684,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tmdbClassObject.setType("TV");
     }
 
+
+    //initialize the header
     public void buildHeader(){
         this.tabHome = findViewById(R.id.img_tabHome) ;
         this.tabDiscover = findViewById(R.id.img_tabDiscover) ;
@@ -691,6 +697,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tabDiscover.setOnClickListener(this);
     }
 
+
+    //onclick functions
     @Override
     public void onClick(View v) {
 

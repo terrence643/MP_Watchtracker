@@ -68,6 +68,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    //get search results for movie
     public class GetSearchMovie extends AsyncTask<String, String, String> {
 
         @Override
@@ -143,6 +144,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    //get search results for tv
     public class GetSearchTv extends AsyncTask<String, String, String> {
 
         @Override
@@ -246,6 +248,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+
     //put data in search recycler
     public void dataInSearchTv(List<TMDBClass> tmdbList){
         this.searchAdapter = new TMDBAdapter(getBaseContext(), tmdbList) ;
@@ -273,6 +276,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+
     //create movie object
     public void createMovie(int position, List<TMDBClass> movieList){
         tmdbObject = new TMDBClass() ;

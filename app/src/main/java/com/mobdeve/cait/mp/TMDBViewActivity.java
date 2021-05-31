@@ -66,6 +66,7 @@ public class TMDBViewActivity extends AppCompatActivity implements View.OnClickL
     private String status ;
     private String movieID ;
     private String type ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -388,7 +389,6 @@ public class TMDBViewActivity extends AppCompatActivity implements View.OnClickL
             tv_status.setText("Not Watching");
         }
     }
-
 
     //create a movie object
     public void createMovie(int position){

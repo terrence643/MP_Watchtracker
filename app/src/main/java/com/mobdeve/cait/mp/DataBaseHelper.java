@@ -32,8 +32,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         if(db != null){
             cursor = db.rawQuery(retrieve, null);   // contains all data
-//            Log.d("DBHELPER/", "getAllData: cursor = " + cursor);
-//            Log.d("DBHELPER/", "getAllData: column 0 = " + cursor.getString(1));
         } return cursor;
     }
 
@@ -68,18 +66,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-
-//    public boolean CheckIsDataAlreadyInDBorNot(String TableName, String MovieId) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String Query = "Select * from " + TableName + " WHERE " + MovieId ;
-//        Cursor cursor = db.rawQuery(Query, null);
-//        if(cursor.getCount() <= 0){
-//            cursor.close();
-//            return false;
-//        }
-//        cursor.close();
-//        return true;
-//    }
 
     public boolean CheckStatus(String TableName,String Status){
         SQLiteDatabase db = this.getReadableDatabase();
