@@ -36,8 +36,8 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
     private List<TMDBClass> tvList;
     private RecyclerView recycler_Movie;
     private RecyclerView recycler_Tv;
-    private com.mobdeve.cait.mp.TvAdapter TvAdapter;
-    private MovieAdapter movieAdapter ;
+    private TMDBAdapter tvAdapter;
+    private TMDBAdapter movieAdapter ;
     private TextView tabName ;
     private ImageView tabHome ;
     private ImageView tabDiscover ;
@@ -97,10 +97,13 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
                 break ;
             case R.id.btn_dMovie:
                 intent = new Intent(getBaseContext(), MoviesActivity.class);
+                intent.putExtra("type", "Movies") ;
                 startActivity(intent);
                 break;
             case R.id.btn_dTV:
-                Log.d("BUTTON/", "onClick: DTV");
+                intent = new Intent(getBaseContext(), MoviesActivity.class);
+                intent.putExtra("type", "TV") ;
+                startActivity(intent);
                 break;
         }
     }
@@ -253,20 +256,21 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
     private void dataInRecyclerMovie(List<TMDBClass> movieList){
         //MOVIES
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        this.movieAdapter = new MovieAdapter(this, movieList);
+        this.movieAdapter = new TMDBAdapter(this, movieList);
         this.recycler_Movie = findViewById(R.id.recycler_Finish) ;
         recycler_Movie.setLayoutManager(layoutManager);
         recycler_Movie.setAdapter(movieAdapter);
 
 
-        movieAdapter.setOnItemClickListener(new MovieAdapter.OnItemClickListener() {
+        movieAdapter.setOnItemClickListener(new TMDBAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
-                Intent i = new Intent(DiscoverActivity.this,MovieViewActivity.class);
+                Intent i = new Intent(DiscoverActivity.this, TMDBViewActivity.class);
                 createMovie(position);
                 i.putExtra("movieParcel", movie) ;
                 i.putExtra("poster_path",movieList.get(position).getImg());
+                i.putExtra("status", "") ;
                 Log.d("MOVIECLICK", "onItemClick: " + position);
                 Log.d("MOVIECLICK", "onItemClick: " + movie.getId());
                 startActivity(i);
@@ -279,19 +283,20 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
     private void dataInRecyclerTv(List<TMDBClass> tvList){
         //TV list
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        this.TvAdapter = new TvAdapter(this, tvList);
+        this.tvAdapter = new TMDBAdapter(this, tvList);
         this.recycler_Tv = findViewById(R.id.recycler_Current) ;
         recycler_Tv.setLayoutManager(layoutManager);
-        recycler_Tv.setAdapter(TvAdapter);
+        recycler_Tv.setAdapter(tvAdapter);
 
 
-        TvAdapter.setOnItemClickListener(new com.mobdeve.cait.mp.TvAdapter.OnItemClickListener() {
+        tvAdapter.setOnItemClickListener(new TMDBAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent i2 = new Intent(DiscoverActivity.this,TvViewActivity.class);
+                Intent i2 = new Intent(DiscoverActivity.this, TMDBViewActivity.class);
                 createTV(position);
-                i2.putExtra("tvParcel", tvShow) ;
+                i2.putExtra("movieParcel", tvShow) ;
                 i2.putExtra("poster_path",tvList.get(position).getImg());
+                i2.putExtra("status", "") ;
                 startActivity(i2);
                 Log.d("TVCLICK", "onItemClick: " + position);
             }
@@ -307,6 +312,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         movie.setOverview(movieList.get(position).getOverview());
         movie.setLanguage(movieList.get(position).getLanguage());
         movie.setAirdate(movieList.get(position).getAirdate());
+        movie.setType("Movie");
     }
 
     //create tv object
@@ -318,6 +324,6 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         tvShow.setOverview(tvList.get(position).getOverview());
         tvShow.setLanguage(tvList.get(position).getLanguage());
         tvShow.setAirdate(tvList.get(position).getAirdate());
-
+        tvShow.setType("TV");
     }
 }

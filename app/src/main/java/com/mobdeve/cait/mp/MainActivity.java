@@ -1,29 +1,19 @@
 package com.mobdeve.cait.mp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,7 +25,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -47,9 +36,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView recycleCurrent ;
     private RecyclerView recycleTowatch ;
     private RecyclerView recyclerFinish ;
-    private TvAdapter currentAdapter ;
-    private TvAdapter towatchAdapter ;
-    private TvAdapter finishAdapter ;
+    private TMDBAdapter currentAdapter ;
+    private TMDBAdapter towatchAdapter ;
+    private TMDBAdapter finishAdapter ;
 
     private DataBaseHelper myDb;
     private List<TMDBClass> currentList ;
@@ -58,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<String>tmdbIDs ;
     private List<String> tmdbTypes ;
     private List<String> tmdbStatus ;
+    private TMDBClass tmdbClassObject ;
 
     private int indexCurrent;
     private int indexTowatch;
@@ -220,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     model.setOverview(jsonObject.getString("overview"));
                     model.setLanguage(jsonObject.getString("original_language"));
                     model.setAirdate(jsonObject.getString("release_date"));
-
+                    model.setType("Movie");
                     currentList.add(model);
 
                 } catch (JSONException jsonException) {
@@ -290,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 model.setOverview(jsonObject.getString("overview"));
                 model.setLanguage(jsonObject.getString("original_language"));
                 model.setAirdate(jsonObject.getString("release_date"));
-
+                model.setType("Movie");
                 towatchList.add(model);
 
 
@@ -362,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 model.setOverview(jsonObject.getString("overview"));
                 model.setLanguage(jsonObject.getString("original_language"));
                 model.setAirdate(jsonObject.getString("release_date"));
-
+                model.setType("Movie");
                 finishList.add(model);
 
             } catch (JSONException jsonException) {
@@ -431,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 model.setOverview(jsonObject.getString("overview"));
                 model.setLanguage(jsonObject.getString("original_language"));
                 model.setAirdate(jsonObject.getString("first_air_date"));
-
+                model.setType("TV");
                 currentList.add(model);
 
             } catch (JSONException jsonException) {
@@ -499,7 +489,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 model.setOverview(jsonObject.getString("overview"));
                 model.setLanguage(jsonObject.getString("original_language"));
                 model.setAirdate(jsonObject.getString("first_air_date"));
-
+                model.setType("TV");
                 towatchList.add(model);
 
             } catch (JSONException jsonException) {
@@ -566,7 +556,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 model.setOverview(jsonObject.getString("overview"));
                 model.setLanguage(jsonObject.getString("original_language"));
                 model.setAirdate(jsonObject.getString("first_air_date"));
-
+                model.setType("TV");
                 finishList.add(model);
 
             } catch (JSONException jsonException) {
@@ -581,30 +571,115 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void dataInRecyclerCurrent(List<TMDBClass> tvList) {
         //TV list
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        currentAdapter = new TvAdapter(getBaseContext(), tvList);
+        currentAdapter = new TMDBAdapter(getBaseContext(), tvList);
         this.recycleCurrent = findViewById(R.id.recycler_Current);
         recycleCurrent.setLayoutManager(layoutManager);
         recycleCurrent.setAdapter(currentAdapter);
+
+        currentAdapter.setOnItemClickListener(new TMDBAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                Intent i = new Intent(getBaseContext(), TMDBViewActivity.class);
+                if(currentList.get(position).getType().equals("Movie"))
+                    createMovie(position, currentList);
+                else
+                    createTV(position, currentList);
+
+                i.putExtra("movieParcel", tmdbClassObject) ;
+                i.putExtra("poster_path",currentList.get(position).getImg());
+                i.putExtra("status", "Currently watching") ;
+                Log.d(TAG, "onItemClick: " + position);
+                Log.d(TAG, "onItemClick: " + tmdbClassObject.getId());
+
+                startActivity(i);
+            }
+        });
+
     }
 
     //This function loads the to watch
     private void dataInRecyclerTowatch(List<TMDBClass> tvList) {
         //TV list
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        towatchAdapter = new TvAdapter(getBaseContext(), tvList);
+        towatchAdapter = new TMDBAdapter(getBaseContext(), tvList);
         this.recycleTowatch = findViewById(R.id.recycler_Towatch);
         recycleTowatch.setLayoutManager(layoutManager);
         recycleTowatch.setAdapter(towatchAdapter);
+
+        towatchAdapter.setOnItemClickListener(new TMDBAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                Intent i = new Intent(getBaseContext(), TMDBViewActivity.class);
+                if(towatchList.get(position).getType().equals("Movie"))
+                    createMovie(position, towatchList);
+                else
+                    createTV(position, towatchList);
+
+                i.putExtra("movieParcel", tmdbClassObject) ;
+                i.putExtra("poster_path",towatchList.get(position).getImg());
+                i.putExtra("status", "To watch") ;
+                Log.d(TAG, "onItemClick: " + position);
+                Log.d(TAG, "onItemClick: " + tmdbClassObject.getId());
+
+                startActivity(i);
+            }
+        });
     }
 
     //This function loads the finished watching
     private void dataInRecyclerFinish(List<TMDBClass> tvList) {
         //TV list
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        finishAdapter = new TvAdapter(getBaseContext(), tvList);
+        finishAdapter = new TMDBAdapter(getBaseContext(), tvList);
         this.recyclerFinish = findViewById(R.id.recycler_Finish);
         recyclerFinish.setLayoutManager(layoutManager);
         recyclerFinish.setAdapter(finishAdapter);
+
+        finishAdapter.setOnItemClickListener(new TMDBAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                Intent i = new Intent(getBaseContext(), TMDBViewActivity.class);
+                if(finishList.get(position).getType().equals("Movie"))
+                    createMovie(position, finishList);
+                else
+                    createTV(position, finishList);
+
+                i.putExtra("movieParcel", tmdbClassObject) ;
+                i.putExtra("poster_path",finishList.get(position).getImg());
+                i.putExtra("status", "Finished watching") ;
+                Log.d(TAG, "onItemClick: " + position);
+                Log.d(TAG, "onItemClick: " + tmdbClassObject.getId());
+
+                startActivity(i);
+            }
+        });
+    }
+
+    //create movie object
+    public void createMovie(int position, List<TMDBClass> tmdblist){
+        tmdbClassObject = new TMDBClass() ;
+        tmdbClassObject.setId(tmdblist.get(position).getId());
+        tmdbClassObject.setName(tmdblist.get(position).getName());
+        tmdbClassObject.setImg(tmdblist.get(position).getImg());
+        tmdbClassObject.setOverview(tmdblist.get(position).getOverview());
+        tmdbClassObject.setLanguage(tmdblist.get(position).getLanguage());
+        tmdbClassObject.setAirdate(tmdblist.get(position).getAirdate());
+        tmdbClassObject.setType("Movie");
+    }
+
+    //create tv object
+    public  void createTV(int position, List<TMDBClass> tmdblist){
+        tmdbClassObject = new TMDBClass() ;
+        tmdbClassObject.setId(tmdblist.get(position).getId());
+        tmdbClassObject.setName(tmdblist.get(position).getName());
+        tmdbClassObject.setImg(tmdblist.get(position).getImg());
+        tmdbClassObject.setOverview(tmdblist.get(position).getOverview());
+        tmdbClassObject.setLanguage(tmdblist.get(position).getLanguage());
+        tmdbClassObject.setAirdate(tmdblist.get(position).getAirdate());
+        tmdbClassObject.setType("TV");
     }
 
     public void buildHeader(){

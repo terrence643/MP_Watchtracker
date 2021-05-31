@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MP">
         <activity android:name=".MoviesActivity"></activity>
         <activity android:name=".SearchActivity"></activity>
-        <activity android:name=".MovieViewActivity" />
+        <activity android:name=".TMDBViewActivity" />
         <activity
             android:name=".DiscoverActivity"
             android:launchMode="singleTask" />

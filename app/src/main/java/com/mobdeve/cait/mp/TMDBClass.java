@@ -11,6 +11,7 @@ public class TMDBClass implements Parcelable {
     String language;
     String overview;
     String airdate ;
+    String type ;
 
     protected TMDBClass(Parcel in) {
         id = in.readString();
@@ -19,6 +20,7 @@ public class TMDBClass implements Parcelable {
         language = in.readString();
         overview = in.readString();
         airdate = in.readString();
+        type = in.readString();
 
     }
 
@@ -82,13 +84,14 @@ public class TMDBClass implements Parcelable {
         this.airdate = airdate;
     }
 
-    public TMDBClass(String id, String name, String img, String language, String overview, String airdate) {
+    public TMDBClass(String id, String name, String img, String language, String overview, String airdate, String type) {
         this.id = id;
         this.name = name;
         this.img = img;
         this.language = language;
         this.overview = overview;
         this.airdate = airdate ;
+        this.type = type ;
     }
 
     public TMDBClass() {
@@ -99,6 +102,14 @@ public class TMDBClass implements Parcelable {
         return 0;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
@@ -107,6 +118,7 @@ public class TMDBClass implements Parcelable {
         dest.writeString(language);
         dest.writeString(overview);
         dest.writeString(airdate);
+        dest.writeString(type);
 
     }
 }

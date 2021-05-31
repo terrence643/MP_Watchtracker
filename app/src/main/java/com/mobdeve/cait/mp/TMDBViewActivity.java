@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,7 +31,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieViewActivity extends AppCompatActivity implements View.OnClickListener {
+//This activity is to show the details of a movie or a show
+public class TMDBViewActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tabName ;
     private ImageView tabHome ;
@@ -49,6 +49,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
     private Button btn_movieUpdate;
     private Button btn_movieAdd;
     private RadioButton radioButton;
+
     private TextView tv_MovieViewTitle;
     private List<TMDBClass> movieList;
     private ImageView ImageView;
@@ -58,10 +59,11 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
     private TextView tv_Airdate ;
     private RadioGroup radioGroup ;
     private String radiotext;
-    private RecyclerView recycler_Recommend ;
-    private MovieAdapter movieAdapter ;
-    private TMDBClass movie ;
 
+    private RecyclerView recycler_Recommend ;
+    private TMDBAdapter movieAdapter ;
+    private TMDBClass movie ;
+    private String status ;
     private String movieID ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,15 +72,22 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
 
         Intent i = getIntent();
         movie = i.getParcelableExtra("movieParcel") ;
+        status = i.getStringExtra("status") ;
+        Log.d("MOVIE//", "onCreate: status = " + status);
         movieID = movie.getId() ;
         Log.d("MOVIE//", "onCreate: movieID = " + movieID);
         buildHeader();
         buildViews();
         displayMovie();
 
-        GetDataMovie getDataMovie = new GetDataMovie();
-        getDataMovie.execute();
-
+        if(movie.getType().equals("Movie")){
+            GetDataMovie getDataMovie = new GetDataMovie();
+            getDataMovie.execute();
+        }
+        if(movie.getType().equals("TV")){
+            GetDataTv getDataTv = new GetDataTv() ;
+            getDataTv.execute();
+        }
 
 
     }
@@ -112,6 +121,21 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         this.btn_movieUpdate = findViewById(R.id.btn_movieUpdate);
         this.btn_movieAdd = findViewById(R.id.btn_movieAdd);
 
+        if(status.equals("Currently watching")){
+            radioGroup.clearCheck();
+            radioGroup.check(R.id.radio_Current);
+            tv_status.setText(status);
+        }
+        if(status.equals("To watch")){
+            radioGroup.clearCheck();
+                radioGroup.check(R.id.radio_ToWatch);
+            tv_status.setText(status);
+        }
+        if(status.equals("Finished watching")){
+            radioGroup.clearCheck();
+            radioGroup.check(R.id.radio_Finished);
+            tv_status.setText(status);
+        }
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -137,8 +161,8 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v) {
 
-                if (radiotext.equalsIgnoreCase("not watching")){
-                    myDb.deleteData(intent.getStringExtra("id"));
+                if (radiotext.equalsIgnoreCase("Not watching")){
+                    myDb.deleteData(movieID);
                 }
                 else {
                     myDb.updateData(movie.getId(), radiotext);
@@ -224,6 +248,7 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
                     model.setOverview(jsonObject1.getString("overview"));
                     model.setLanguage(jsonObject1.getString("original_language"));
                     model.setAirdate(jsonObject1.getString("release_date"));
+                    model.setType("Movie");
                     movieList.add(model);
 
                 }
@@ -234,24 +259,102 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    //get data for recommended tv shows
+    public class GetDataTv extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            String current = "";
+            String recommendTv =  "https://api.themoviedb.org/3/tv/"+movie.getId()+"/recommendations?api_key="+BuildConfig.TMDB_API;
+            String similarTV = "https://api.themoviedb.org/3/tv/"+movie.getId()+"/similar?api_key="+BuildConfig.TMDB_API ;
+//            Log.d(TAG, "doInBackground: recommendtv url = " + recommendTv);
+//            Log.d(TAG, "doInBackground: GUMANA");
+            try{
+                URL url;
+                HttpURLConnection urlConnection = null;
+
+                try{
+                    url = new URL(recommendTv);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream inputStream = urlConnection.getInputStream();
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+
+                    int data = inputStreamReader.read();
+
+                    while(data != -1){
+                        current += (char) data;
+                        data = inputStreamReader.read();
+                    }
+
+                    return current;
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }finally{
+                    if(urlConnection != null){
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return current;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try{
+                JSONObject jsonObject = new JSONObject(s);
+                JSONArray jsonArray =  jsonObject.getJSONArray("results");
+
+                for(int i = 0; i < jsonArray.length() ; i++){
+
+                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                    TMDBClass model = new TMDBClass();
+                    model.setImg(jsonObject1.getString("poster_path"));
+                    model.setId(jsonObject1.getString("id"));
+                    model.setName(jsonObject1.getString("name"));
+                    model.setLanguage(jsonObject1.getString("original_language"));
+                    model.setOverview(jsonObject1.getString("overview"));
+                    model.setAirdate(jsonObject1.getString("first_air_date"));
+                    model.setType("TV");
+                    movieList.add(model);
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            dataInMovie(movieList);
+        }
+    }
 
     //populate the recyclerview for recommended
     private void dataInMovie(List<TMDBClass> movieList){
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        movieAdapter = new MovieAdapter(MovieViewActivity.this, movieList);
+        movieAdapter = new TMDBAdapter(TMDBViewActivity.this, movieList);
         this.recycler_Recommend = findViewById(R.id.recycle_Recommend) ;
         recycler_Recommend.setLayoutManager(layoutManager);
         recycler_Recommend.setAdapter(movieAdapter);
 
 
-        movieAdapter.setOnItemClickListener(new MovieAdapter.OnItemClickListener() {
+        movieAdapter.setOnItemClickListener(new TMDBAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
-                Intent i = new Intent(getBaseContext(),MovieViewActivity.class);
-                createMovie(position);
+                Intent i = new Intent(getBaseContext(), TMDBViewActivity.class);
+                if(movieList.get(position).getType().equals("Movie"))
+                    createMovie(position);
+                else
+                    createTV(position);
+
                 i.putExtra("movieParcel", movie) ;
                 i.putExtra("poster_path",movieList.get(position).getImg());
+                i.putExtra("status", "") ;
                 Log.d("MOVIECLICK", "onItemClick: " + position);
                 Log.d("MOVIECLICK", "onItemClick: " +  movieList.get(position).getName());
                 startActivity(i);
@@ -290,5 +393,18 @@ public class MovieViewActivity extends AppCompatActivity implements View.OnClick
         movie.setOverview(movieList.get(position).getOverview());
         movie.setLanguage(movieList.get(position).getLanguage());
         movie.setAirdate(movieList.get(position).getAirdate());
+        movie.setType("Movie");
+    }
+
+    //create a movie object
+    public void createTV(int position){
+        movie = new TMDBClass() ;
+        movie.setId(movieList.get(position).getId());
+        movie.setName(movieList.get(position).getName());
+        movie.setImg(movieList.get(position).getImg());
+        movie.setOverview(movieList.get(position).getOverview());
+        movie.setLanguage(movieList.get(position).getLanguage());
+        movie.setAirdate(movieList.get(position).getAirdate());
+        movie.setType("TV");
     }
 }

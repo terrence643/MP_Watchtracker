@@ -13,53 +13,54 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
+public class TMDBAdapter extends RecyclerView.Adapter<TMDBAdapter.MyViewHolder> {
 
-    private Context movieContext;
-    private List<TMDBClass> movieData;
-    private OnItemClickListener movieListener ;
+    private Context tvContext;
+    private List<TMDBClass> tvData;
+    private OnItemClickListener tvListener ;
 
     public interface OnItemClickListener{
         void onItemClick(int position) ;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
-        movieListener = listener ;
+        tvListener = listener ;
     }
 
-    public MovieAdapter(Context movieContext, List<TMDBClass> movieData) {
-        this.movieContext = movieContext;
-        this.movieData = movieData;
+    public TMDBAdapter(Context tvContext, List<TMDBClass> tvData) {
+        this.tvContext = tvContext;
+        this.tvData = tvData;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.icon_img_layout, parent, false) ;
-        MyViewHolder myViewHolder = new MyViewHolder(view, movieListener) ;
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.icon_img_layout, parent, false) ;
+        MyViewHolder myViewHolder = new MyViewHolder(v, tvListener) ;
         return myViewHolder ;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        Glide.with(movieContext).load("https://image.tmdb.org/t/p/w500"+movieData.get(position).getImg()).into(holder.moviePoster);
+        Glide.with(tvContext).load("https://image.tmdb.org/t/p/w500"+tvData.get(position).getImg()).into(holder.tvPoster);
+
     }
 
     @Override
     public int getItemCount() {
-        return movieData.size();
+        return tvData.size();
     }
 
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView moviePoster;
+        ImageView tvPoster;
 
         public MyViewHolder(@NonNull View itemView, OnItemClickListener listener){
             super(itemView);
-            moviePoster = itemView.findViewById(R.id.iconPoster);
+            tvPoster = itemView.findViewById(R.id.iconPoster);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

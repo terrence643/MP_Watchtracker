@@ -46,7 +46,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
     private RadioButton radioButton;
     private TextView tv_TVViewTitle;
     private RecyclerView recycler_TVRecs;
-    private TvAdapter TvAdapter ;
+    private TMDBAdapter TMDBAdapter;
     private ImageView tv_TVPoster;
     private TextView tv_TVLanguage;
     private TextView tv_TVOverview;
@@ -205,6 +205,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
                     model.setLanguage(jsonObject1.getString("original_language"));
                     model.setOverview(jsonObject1.getString("overview"));
                     model.setAirdate(jsonObject1.getString("first_air_date"));
+                    model.setType("TV");
                     tvList.add(model);
 
                 }
@@ -239,22 +240,23 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
     private void dataInRecyclerTv(List<TMDBClass> tvList){
         //TV list
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        TvAdapter = new TvAdapter(TvViewActivity.this, tvList);
+        TMDBAdapter = new TMDBAdapter(TvViewActivity.this, tvList);
         this.recycler_TVRecs = findViewById(R.id.recycle_TVRecs) ;
         recycler_TVRecs.setLayoutManager(layoutManager);
-        recycler_TVRecs.setAdapter(TvAdapter);
+        recycler_TVRecs.setAdapter(TMDBAdapter);
 
         Log.d(TAG, "dataInRecyclerTv: NA CREATE RECYCLE");
 //        Log.d(TAG, "dataInRecyclerTv: TVSHOW 0 ID = " + tvList.get(0).getId() );
 
 
-        TvAdapter.setOnItemClickListener(new com.mobdeve.cait.mp.TvAdapter.OnItemClickListener() {
+        TMDBAdapter.setOnItemClickListener(new TMDBAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 Intent i2 = new Intent(getBaseContext(),TvViewActivity.class);
                 createTV(position);
                 i2.putExtra("tvParcel", tvShow) ;
                 i2.putExtra("poster_path",tvList.get(position).getImg());
+                i2.putExtra("status", "") ;
                 startActivity(i2);
                 Log.d("TVCLICK", "onItemClick: " + position);
             }
@@ -269,6 +271,7 @@ public class TvViewActivity extends AppCompatActivity implements View.OnClickLis
         tvShow.setOverview(tvList.get(position).getOverview());
         tvShow.setLanguage(tvList.get(position).getLanguage());
         tvShow.setAirdate(tvList.get(position).getAirdate());
+        tvShow.setType("TV");
 
     }
 
