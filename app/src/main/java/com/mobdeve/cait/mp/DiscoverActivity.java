@@ -97,7 +97,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
                 break ;
             case R.id.btn_dMovie:
                 intent = new Intent(getBaseContext(), MoviesActivity.class);
-                intent.putExtra("type", "Movies") ;
+                intent.putExtra("type", "Movie") ;
                 startActivity(intent);
                 break;
             case R.id.btn_dTV:

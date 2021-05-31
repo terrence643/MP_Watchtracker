@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
@@ -56,8 +57,15 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         search = intent.getStringExtra("search") ;
         buildheader();
 
-        GetSearchMovie getSearchMovie = new GetSearchMovie() ;
-        getSearchMovie.execute();
+        searchLists = new ArrayList<>() ;
+        if(type.equals("Movie")){
+            GetSearchMovie getSearchMovie = new GetSearchMovie() ;
+            getSearchMovie.execute();
+        }
+        if(type.equals("TV")){
+            GetSearchTv getSearchTv = new GetSearchTv() ;
+            getSearchTv.execute() ;
+        }
     }
 
     public class GetSearchMovie extends AsyncTask<String, String, String> {
@@ -115,11 +123,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 for(int i = 0; i < jsonArray.length() ; i++){
 
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                    Log.d(TAG, "onPostExecute: id = " + jsonObject1.getString("original_title"));
 
                     TMDBClass model = new TMDBClass();
                     model.setImg(jsonObject1.getString("poster_path"));
                     model.setId(jsonObject1.getString("id"));
-                    model.setName(jsonObject1.getString("title"));
+                    model.setName(jsonObject1.getString("original_title"));
                     model.setOverview(jsonObject1.getString("overview"));
                     model.setLanguage(jsonObject1.getString("original_language"));
                     model.setAirdate(jsonObject1.getString("release_date"));
@@ -134,13 +143,87 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    public class GetSearchTv extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            String current = "";
+            String searchThis = searchTv + search ;
+            try{
+                URL url;
+                HttpURLConnection urlConnection = null;
+
+                try{
+                    url = new URL(searchThis);
+                    Log.d(TAG, "doInBackground: url = " + url);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream inputStream = urlConnection.getInputStream();
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+
+                    int data = inputStreamReader.read();
+
+                    while(data != -1){
+                        current += (char) data;
+                        data = inputStreamReader.read();
+                    }
+
+                    return current;
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }finally{
+                    if(urlConnection != null){
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return current;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Log.d(TAG, "onPostExecute: EXEC");
+            try{
+                JSONObject jsonObject = new JSONObject(s);
+                JSONArray jsonArray =  jsonObject.getJSONArray("results");
+                Log.d(TAG, "onPostExecute: size = " + jsonArray.length());
+                for(int i = 0; i < jsonArray.length() ; i++){
+
+                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                    Log.d(TAG, "onPostExecute: name = " + jsonObject1.getString("original_language"));
+
+                    TMDBClass model = new TMDBClass();
+                    model.setImg(jsonObject1.getString("poster_path"));
+                    model.setId(jsonObject1.getString("id"));
+                    model.setName(jsonObject1.getString("name"));
+                    model.setLanguage(jsonObject1.getString("original_language"));
+                    model.setOverview(jsonObject1.getString("overview"));
+                    model.setAirdate(jsonObject1.getString("first_air_date"));
+                    model.setType("Tv");
+                    searchLists.add(model);
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            dataInSearchTv(searchLists);
+        }
+    }
 
 
-    //put data in latest cler
+    //put data in search recycler
     public void dataInSearch(List<TMDBClass> tmdbList){
         this.searchAdapter = new TMDBAdapter(getBaseContext(), tmdbList) ;
         this.recycleSearch = findViewById(R.id.recycle_Search) ;
-        recycleSearch.setLayoutManager(new GridLayoutManager(getBaseContext(), 2));
+        recycleSearch.setLayoutManager(new GridLayoutManager(getBaseContext(), 3));
         recycleSearch.setAdapter(searchAdapter);
 
         searchAdapter.setOnItemClickListener(new TMDBAdapter.OnItemClickListener() {
@@ -163,7 +246,33 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+    //put data in search recycler
+    public void dataInSearchTv(List<TMDBClass> tmdbList){
+        this.searchAdapter = new TMDBAdapter(getBaseContext(), tmdbList) ;
+        this.recycleSearch = findViewById(R.id.recycle_Search) ;
+        recycleSearch.setLayoutManager(new GridLayoutManager(getBaseContext(), 3));
+        recycleSearch.setAdapter(searchAdapter);
 
+        searchAdapter.setOnItemClickListener(new TMDBAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                Intent i = new Intent(getBaseContext(), TMDBViewActivity.class);
+                if(searchLists.get(position).getType().equals("Movie"))
+                    createMovie(position, searchLists);
+                else
+                    createTV(position, searchLists);
+
+                i.putExtra("movieParcel", tmdbObject) ;
+                i.putExtra("poster_path",searchLists.get(position).getImg());
+                i.putExtra("status", "") ;
+                Log.d("MOVIECLICK", "onItemClick: " + position);
+                Log.d("MOVIECLICK", "onItemClick: " +  searchLists.get(position).getName());
+                startActivity(i);
+
+            }
+        });
+    }
     //create movie object
     public void createMovie(int position, List<TMDBClass> movieList){
         tmdbObject = new TMDBClass() ;

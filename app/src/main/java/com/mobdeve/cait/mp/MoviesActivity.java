@@ -65,7 +65,7 @@ public class MoviesActivity extends AppCompatActivity implements View.OnClickLis
 
         Log.d("", "onCreate: type= "+ type);
 
-        if(type.equals("Movies")){
+        if(type.equals("Movie")){
             GetLatestDataMovie getLatestDataMovie = new GetLatestDataMovie() ;
             getLatestDataMovie.execute();
             GetTopDataMovie getTopDataMovie = new GetTopDataMovie() ;
@@ -465,7 +465,6 @@ public class MoviesActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-
     //put data in latest recycler
     public void dataInLatest(List<TMDBClass> tmdbList){
 
@@ -540,16 +539,14 @@ public class MoviesActivity extends AppCompatActivity implements View.OnClickLis
             public void onItemClick(int position) {
 
                 Intent i = new Intent(getBaseContext(), TMDBViewActivity.class);
-                if(topLists.get(position).getType().equals("Movie"))
-                    createMovie(position, topLists);
+                if(upcomingLists.get(position).getType().equals("Movie"))
+                    createMovie(position, upcomingLists);
                 else
-                    createTV(position, topLists);
+                    createTV(position, upcomingLists);
 
                 i.putExtra("movieParcel", tmdbObject) ;
-                i.putExtra("poster_path",topLists.get(position).getImg());
+                i.putExtra("poster_path",upcomingLists.get(position).getImg());
                 i.putExtra("status", "") ;
-                Log.d("MOVIECLICK", "onItemClick: " + position);
-                Log.d("MOVIECLICK", "onItemClick: " +  topLists.get(position).getName());
                 startActivity(i);
 
             }

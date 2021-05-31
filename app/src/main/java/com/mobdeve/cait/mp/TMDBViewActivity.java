@@ -65,6 +65,7 @@ public class TMDBViewActivity extends AppCompatActivity implements View.OnClickL
     private TMDBClass movie ;
     private String status ;
     private String movieID ;
+    private String type ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +76,7 @@ public class TMDBViewActivity extends AppCompatActivity implements View.OnClickL
         status = i.getStringExtra("status") ;
         Log.d("MOVIE//", "onCreate: status = " + status);
         movieID = movie.getId() ;
+        type = movie.getType() ;
         Log.d("MOVIE//", "onCreate: movieID = " + movieID);
         buildHeader();
         buildViews();
@@ -124,16 +126,19 @@ public class TMDBViewActivity extends AppCompatActivity implements View.OnClickL
         if(status.equals("Currently watching")){
             radioGroup.clearCheck();
             radioGroup.check(R.id.radio_Current);
+            btn_movieAdd.setVisibility(View.INVISIBLE);
             tv_status.setText(status);
         }
         if(status.equals("To watch")){
             radioGroup.clearCheck();
-                radioGroup.check(R.id.radio_ToWatch);
+            radioGroup.check(R.id.radio_ToWatch);
+            btn_movieAdd.setVisibility(View.INVISIBLE);
             tv_status.setText(status);
         }
         if(status.equals("Finished watching")){
             radioGroup.clearCheck();
             radioGroup.check(R.id.radio_Finished);
+            btn_movieAdd.setVisibility(View.INVISIBLE);
             tv_status.setText(status);
         }
 
@@ -149,7 +154,7 @@ public class TMDBViewActivity extends AppCompatActivity implements View.OnClickL
         btn_movieAdd.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                myDb.insertData(movieID,radiotext, "Movie");
+                myDb.insertData(movieID,radiotext, type);
                 tv_status.setText(radiotext);
                 Toast toast = Toast.makeText(getApplicationContext(),"Added",Toast.LENGTH_LONG);
                 toast.show();
@@ -349,8 +354,9 @@ public class TMDBViewActivity extends AppCompatActivity implements View.OnClickL
                 Intent i = new Intent(getBaseContext(), TMDBViewActivity.class);
                 if(movieList.get(position).getType().equals("Movie"))
                     createMovie(position);
-                else
+                if(movieList.get(position).getType().equals("TV"))
                     createTV(position);
+
 
                 i.putExtra("movieParcel", movie) ;
                 i.putExtra("poster_path",movieList.get(position).getImg());

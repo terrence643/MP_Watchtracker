@@ -289,7 +289,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 jsonException.printStackTrace();
             }
             towatchAdapter.notifyDataSetChanged();
-            Log.d(TAG, "onPostExecute: CURRENTLIST SIZE after movie = " + towatchList.size());
         }
     }
 
@@ -358,8 +357,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } catch (JSONException jsonException) {
                 jsonException.printStackTrace();
             }
-            currentAdapter.notifyDataSetChanged();
-            Log.d(TAG, "onPostExecute: CURRENTLIST SIZE after movie = " + currentList.size());
+            finishAdapter.notifyDataSetChanged();
         }
     }
 
